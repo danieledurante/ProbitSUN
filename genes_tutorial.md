@@ -59,7 +59,7 @@ i.i.d. sampling from the unified skew-normal posterior
 ------------------
 This subsection implements the **i.i.d. sampler from the unified skew-normal posterior** which relies on the novel results in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). This scheme is described in detail in Section 2.4 of the paper. A pseudo-code is also provided in `Algorithm 1`. 
 
-To implement this routine, **let us re-start a new `R` session and set the working directory where `gene_data.RData` is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions togheter with the number of i.i.d. samples to draw.
+To implement this routine, **let us re-start a new `R` session and set the working directory where `gene_data.RData` is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of i.i.d. samples.
 
 ``` r
 rm(list=ls())
