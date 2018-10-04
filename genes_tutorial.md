@@ -118,7 +118,7 @@ beta_SUN <- V_0_scale_plus_xi+V_1_scale
 })
 ```
 
-Let us finally **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the samples of the posterior and will be used in the performance comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
+Let us finally **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the samples of the posterior and will be used in the comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
 
 ``` r
 # Posterior means via Monte Carlo
