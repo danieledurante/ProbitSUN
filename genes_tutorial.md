@@ -127,6 +127,7 @@ SUN_means<-apply(beta_SUN,1,mean)
 # Posterior predictive probabilities via Monte Carlo
 pred_SUN <- rep(0,dim(X_new)[1])
 beta_SUN <- t(beta_SUN)
+
 for (i in 1:dim(X_new)[1]){
 pred_SUN[i] <- mean(pnorm((beta_SUN%*%X_new[i,]),0,1))
 print(i)}
