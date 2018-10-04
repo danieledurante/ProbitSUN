@@ -59,7 +59,7 @@ i.i.d. sampling from the unified skew-normal posterior
 ------------------
 This subsection implements the **i.i.d. sampler from the unified skew-normal posterior** which relies on the novel results in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). This scheme is described in detail in Section 2.4 of the paper. A pseudo-code is also provided in `Algorithm 1`. 
 
-To implement this routine, let us re-start a new `R` session and set the working directory where `gene_data.RData` is placed. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set model dimensions togheter with the number of i.i.d. samples to draw.
+To implement this routine, **let us re-start a new `R` session and set the working directory where `gene_data.RData` is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions togheter with the number of i.i.d. samples to draw.
 
 ``` r
 rm(list=ls())
@@ -79,7 +79,7 @@ p <- dim(X_data)[2]
 # Number of i.i.d. samples from the posterior
 N_sampl <- 20000
 ```
-Once the above steps have been done, let us first define the key quantities to implement `Algorithm 1` in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565).
+Once the above steps have been done, let us first **define the key quantities to implement `Algorithm 1`** in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565).
 
 ``` r
 # Relevant parameters of the Gaussian prior
@@ -101,10 +101,10 @@ coef_V0 <- omega
 Var_V0 <- bar_Omega-bar_Omega%*%omega%*%t(D)%*%solve(D%*%Omega%*%t(D)+diag(1,n,n))%*%D%*%omega%*%bar_Omega
 Var_V0 <- 0.5*(Var_V0+t(Var_V0))
 ```
-Finally let us implement `Algorithm 1`. This requires calculating linear combinations of samples from *p*-variate Gaussians and *n*-variate truncated normals (using the methods in [Botev (2017)](https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12162)). Note that also the running-time is monitored in order to compare it with the performance of the MCMC competitors implement in the upcoming subsections.
+Finally **let us implement `Algorithm 1`**. This requires calculating linear combinations of samples from *p*-variate Gaussians and *n*-variate truncated normals (using the methods in [Botev (2017)](https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12162)). Note that also the running-time is monitored in order to compare it with those of the MCMC competitors implemented in the upcoming subsections.
 
 ``` r
-time_SUN<-system.time({
+time_SUN <- system.time({
 set.seed(123)
 
 V_0 <- t(rmvnorm(N_sampl,mean=rep(0,p),sigma=Var_V0))
@@ -118,7 +118,7 @@ beta_SUN <- V_0_scale_plus_xi+V_1_scale
 })
 ```
 
-Let us finally calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the `24` held-out units. The quantities are obtained here via Monte Carlo integration using the samples of the posterior and will be used in the performance comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
+Let us finally **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the `24` held-out units**. The quantities are obtained here via Monte Carlo integration using the samples of the posterior and will be used in the performance comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
 
 ``` r
 # Posterior means via Monte Carlo
