@@ -23,7 +23,9 @@ dataset_gene <- read.csv("dataset_74-516.csv",header=TRUE,sep="")
 The dataframe  `dataset_gene` contains information on the **response variable** in the first column, and on the **covariates** in the remaining ones. More specifically, the first column `dataset_gene[,1]` contains names of tissues followed by a letter which is either `N` (normal) or `C` (cancerous). Exploiting this information, let us create the response by hand.
    
 ``` r
-y_data <- c(0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,1,1,0,1,0,0,0,1,1,0,1,1,0,0,0,0,0,1,1,1,1,0,0,1,1,0,1,0,1,1,1,1,1,1,1,1)
+y_data <- c(0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,
+            1,1,1,1,1,1,0,0,1,0,0,1,1,0,1,0,0,0,1,1,0,1,1,0,0,0,0,
+            0,1,1,1,1,0,0,1,1,0,1,0,1,1,1,1,1,1,1,1)
 ```
 
 The design matrix comprising the covariates can be easily obtained by extracting the remaining columns in `dataset_gene`. Following [Gelman et al. (2008)](https://projecteuclid.org/euclid.aoas/1231424214), such covariates are also rescaled and an intercept term is added.
