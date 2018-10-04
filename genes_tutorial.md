@@ -7,7 +7,7 @@ Upload and Clean the Cancer SAGE Dataset
 ================
 As discussed in **Section 3** of the paper, the focus is on learning how gene expression (monitored at `p - 1 = 516` tags) relates to the probability of a cancerous tissue. Data are available for `n = 74` measurements and can be downloaded at [Cancer SAGE](http://www.i3s.unice.fr/~pasquier/web/?Research_Activities___Dataset_Downloads___Cancer_SAGE) by clicking [here](http://www.i3s.unice.fr/~pasquier/web/userfiles/downloads/datasets/SAGE_filtered_small_dataset.zip).
  
-The download provides a directory `SAGE_filtered_small_dataset` which contains several datasets. Here the focus is on `dataset_74-516.csv`. To **clean this dataset**, first set the working directory where `dataset_74-516.csv` is placed. Once this has been done, **clean the workspace, and load the data along with useful libraries**.
+The download provides a directory `SAGE_filtered_small_dataset` which contains several datasets. Here the focus is on `dataset_74-516.csv`. To **clean this dataset**, first set the working directory where `dataset_74-516.csv` is placed. Once this has been done, **clean the workspace, and load the data along with useful `R` packages**.
 
 ``` r
 rm(list=ls())
