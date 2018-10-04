@@ -16,7 +16,7 @@ library(arm)
 dataset_gene <- read.csv("dataset_74-516.csv",header=TRUE,sep="")
 ```
 
-The dataframe  `dataset_gene` contains information on the **response variable** in the first column, and on the **covariates** in the remaining ones. More specifically, the first column `dataset_gene[,1]` contains names of tissues followed by a letter which is either `N` (normal) or `C` (cancerous). Exploiting this information, **let us create the response by hand**.
+The dataframe  `dataset_gene` contains information on the **response variable** (first column of `dataset_gene`), and on the **covariates** (subsequent columns of `dataset_gene`). More specifically, the first column `dataset_gene[,1]` contains names of tissues followed by a letter which is either `N` (normal) or `C` (cancerous). Exploiting this information, **let us create the response by hand**.
    
 ``` r
 y_data <- c(0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,
