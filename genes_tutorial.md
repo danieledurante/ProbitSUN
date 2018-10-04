@@ -122,7 +122,7 @@ Let us finally **calculate the posterior mean of the regression coefficients and
 
 ``` r
 # Posterior means via Monte Carlo
-SUN_means<-apply(beta_SUN,1,mean)
+SUN_means <- apply(beta_SUN,1,mean)
 
 # Posterior predictive probabilities via Monte Carlo
 pred_SUN <- rep(0,dim(X_new)[1])
