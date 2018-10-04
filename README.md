@@ -1,4 +1,4 @@
-# Conjugate Bayes for Probit Regression via Unified Skew-Normals
+# Conjugate Bayes for Probit Regression via Unified Skew-Normal Random Variables
 
 This repository is associated with the article [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565), and provides detailed **codes and tutorials to implement the inference methods presented in Section 2 on two illustrative applications**. One case-study is outlined in detail in Section 3 of the paper, whereas the other is meant to provide additional insights. More specifically:
 
