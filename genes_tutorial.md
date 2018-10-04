@@ -53,4 +53,7 @@ save(y,X,y_new,X_new,sel,file="gene_data.RData")
 ```
 Implementation of the Different Sampling Schemes
 ================
-This section contains codes to implement the routine  **independent and identically distributed samples from the unified skew-normal posterior** (`Algorithm 1` in the paper), with state-of-the-art Markov Chain Monte Carlo (MCMC) competitors. These include the **data augmentation MCMC** by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350) (`R` package `bayesm`), the **adaptive Metropolis-Hastings** from [Haario et al. (2001)](https://projecteuclid.org/euclid.bj/1080222083) (`R` package `LaplacesDemon`) and the **Hamiltonian no u-turn sampler** by [Hoffman and Gelman (2014)](http://jmlr.org/papers/v15/hoffman14a.html) (`R` package `rstan`).
+This section contains codes to implement the algorithm which provides **i.i.d. samples from the unified skew-normal posterior** (`Algorithm 1` in the paper), as well as state-of-the-art Markov Chain Monte Carlo (MCMC) competitors. These include the **data augmentation MCMC** by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350) (`R` package `bayesm`), the **adaptive Metropolis-Hastings** from [Haario et al. (2001)](https://projecteuclid.org/euclid.bj/1080222083) (`R` package `LaplacesDemon`) and the **Hamiltonian no u-turn sampler** by [Hoffman and Gelman (2014)](http://jmlr.org/papers/v15/hoffman14a.html) (`R` package `rstan`).
+
+i.i.d. sampling from the unified skew-normal posterior
+------------------
