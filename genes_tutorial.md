@@ -49,7 +49,7 @@ X_new <- X_data[-sel_set,]
 Finally, **save the relevant quantities in the file** `gene_data.RData`.
 
 ``` r
-save(y,X,y_new,X_new,sel,file="gene_data.RData")
+save(y,X,y_new,X_new,sel_set,file="gene_data.RData")
 ```
 Implementation of the Different Sampling Schemes
 ================
