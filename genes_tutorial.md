@@ -7,7 +7,7 @@ Description
 -----------
 As described in the [`README.md`](https://github.com/danieledurante/ProbitSUN/blob/master/README.md) file, this tutorial contains general guidelines and code to perform the analyses for the [Cancer SAGE](http://www.i3s.unice.fr/~pasquier/web/?Research_Activities___Dataset_Downloads___Cancer_SAGE) application in **Section 3** of the paper. In particular, you will find information on how to **download and clean the data**, detailed **`R` code to implement the different methods for posterior inference** discussed in Section 3 and **guidelines to reproduce Table 1 along with Figures 2 and 3** in the paper.
 
-Upload and Clean the the Cancer SAGE Dataset
+Upload and Clean the Cancer SAGE Dataset
 --------------------------------------
 As discussed in **Section 3** of the paper, the focus is on learning how gene expression (monitored at `p - 1 = 516` tags) relates to the probability of a cancerous tissue. Data are available for `n = 74` measurements and can be downloaded at [Cancer SAGE](http://www.i3s.unice.fr/~pasquier/web/?Research_Activities___Dataset_Downloads___Cancer_SAGE) by clicking [here](http://www.i3s.unice.fr/~pasquier/web/userfiles/downloads/datasets/SAGE_filtered_small_dataset.zip).
  
