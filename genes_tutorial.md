@@ -118,7 +118,7 @@ beta_SUN <- V_0_scale_plus_xi+V_1_scale
 })
 ```
 
-Let us finally **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the samples of the posterior and will be used in the comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the samples of the posterior and will be used in the comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
 
 ``` r
 # Posterior means via Monte Carlo
@@ -132,7 +132,7 @@ for (i in 1:dim(X_new)[1]){
 pred_SUN[i] <- mean(pnorm((beta_SUN%*%X_new[i,]),0,1))
 print(i)}
 ```
-Finally, let us **save the output in the file** `SUN_output.RData`
+Finally, **save the output in the file** `SUN_output.RData`
 ``` r
 save(time_SUN,beta_SUN,SUN_means,pred_SUN,file="SUN_output.RData")
 ```
@@ -184,7 +184,7 @@ GIBBS_Samples <- rbprobitGibbs(Data=Data_GIBBS, Prior=Prior_GIBBS, Mcmc=Mcmc_GIB
 beta_GIBBS <- t(GIBBS_Samples$betadraw[(burn+1):N_sampl,])
 ```
 
-Let us finally **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -198,7 +198,7 @@ for (i in 1:dim(X_new)[1]){
 pred_GIBBS[i] <- mean(pnorm((beta_GIBBS%*%X_new[i,]),0,1))
 print(i)}
 ```
-Finally, let us **save the output in the file** `GIBBS_output.RData`
+Finally, **save the output in the file** `GIBBS_output.RData`
 ``` r
 save(time_GIBBS,beta_GIBBS,GIBBS_means,pred_GIBBS,file="GIBBS_output.RData")
 ```
@@ -257,7 +257,7 @@ time_HMC <- get_elapsed_time(HMC_Samples)[1] + get_elapsed_time(HMC_Samples)[2]
 beta_HMC <- t(extract(HMC_Samples)$beta)
 ```
 
-Let us finally **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -271,7 +271,7 @@ for (i in 1:dim(X_new)[1]){
 pred_HMC[i] <- mean(pnorm((beta_HMC%*%X_new[i,]),0,1))
 print(i)}
 ```
-Finally, let us **save the output in the file** `HMC_output.RData`
+Finally, **save the output in the file** `HMC_output.RData`
 ``` r
 save(time_HMC,beta_HMC,HMC_means,pred_HMC,file="HMC_output.RData")
 ```
@@ -348,7 +348,7 @@ MH_Samples <- LaplacesDemon(Model,Data=MyData,Initial.Values=c(EPgene$m),Covar=(
 beta_MH <- t(MH_Samples$Posterior1[(burn+1):N_sampl,])
 ```
 
-Let us finally **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -362,7 +362,7 @@ for (i in 1:dim(X_new)[1]){
 pred_MH[i] <- mean(pnorm((beta_MH%*%X_new[i,]),0,1))
 print(i)}
 ```
-Finally, let us **save the output in the file** `MH_output.RData`
+Finally, **save the output in the file** `MH_output.RData`
 ``` r
 save(time_MH,beta_MH,MH_means,pred_MH,file="MH_output.RData")
 ```
