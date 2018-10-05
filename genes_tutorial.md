@@ -205,7 +205,7 @@ save(time_GIBBS,beta_GIBBS,GIBBS_means,pred_GIBBS,file="GIBBS_output.RData")
 
 Hamiltonian no u-turn sampler
 ------------------
-Let us consider now the **Hamiltonian no u-turn sampler** by [Hoffman and Gelman (2014)](http://jmlr.org/papers/v15/hoffman14a.html) (`R` package `rstan`). To implement this routine, **re-start again a new** `R` **session** and **set also the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of MCMC samples and the requested burn-in `burn` period.
+Let us consider now the **Hamiltonian no u-turn sampler** by [Hoffman and Gelman (2014)](http://jmlr.org/papers/v15/hoffman14a.html) (`R` package `rstan`). To implement this routine, **re-start again a new** `R` **session** and **set also the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of MCMC samples and the requested burn-in `burn`.
 
 ``` r
 rm(list=ls())
