@@ -59,7 +59,7 @@ i.i.d. sampling from the unified skew-normal posterior
 ------------------
 This subsection implements the **i.i.d. sampler from the unified skew-normal posterior** which relies on the novel results in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). This scheme is described in detail in Section 2.4 of the paper. A pseudo-code is also provided in `Algorithm 1`. 
 
-To implement this routine, **let us re-start a new** `R` **session and set the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of i.i.d. samples.
+To implement this routine, **let us re-start a new** `R` **session** and **set the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of i.i.d. samples.
 
 ``` r
 rm(list=ls())
@@ -139,7 +139,7 @@ save(time_SUN,beta_SUN,SUN_means,pred_SUN,file="SUN_output.RData")
 
 Data augmentation Gibbs sampler
 ------------------
-Let us focus now on the **data augmentation Gibbs sampler** by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350) (`R` package `bayesm`). To implement this routine, **re-start again a new** `R` **session** (this is useful to ensure that each algorithm is run with fully clean memory, thus guaranteeing fair comparisons on computational time). **Set also the working directory where** `gene_data.RData` **is placed**. Once this has been done, load again the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of MCMC samples and the requested burn-in period.
+Let us focus now on the **data augmentation Gibbs sampler** by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350) (`R` package `bayesm`). To implement this routine, **re-start again a new** `R` **session** (this is useful to ensure that each algorithm is run with fully clean memory, thus guaranteeing fair comparisons on computational time). **Set also the working directory where** `gene_data.RData` **is placed**. Once this has been done, load again the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of MCMC samples and the requested burn-in `burn` period.
 
 ``` r
 rm(list=ls())
@@ -171,7 +171,7 @@ Prior_GIBBS <- list(betabar=matrix(rep(0,p),c(p,1)),A=diag(1/16,p,p))
 # MCMC settings
 Mcmc_GIBBS <- list(R=N_sampl,keep=1,nprint=0)
 ```
-Finally **let us implement** the Gibbs sampler by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350). This requires the `R` package `bayesm`. Note that also the running-time is monitored for performance comparisons.
+Finally **let us implement** the Gibbs sampler by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350). This requires the `R` package `bayesm`. Note that also here the running-time is monitored for performance comparisons.
 
 ``` r
 time_GIBBS <- system.time({
@@ -201,4 +201,77 @@ print(i)}
 Finally, let us **save the output in the file** `GIBBS_output.RData`
 ``` r
 save(time_GIBBS,beta_GIBBS,GIBBS_means,pred_GIBBS,file="GIBBS_output.RData")
+```
+
+Hamiltonian no u-turn sampler
+------------------
+Let us consider now the **Hamiltonian no u-turn sampler** by [Hoffman and Gelman (2014)](http://jmlr.org/papers/v15/hoffman14a.html) (`R` package `rstan`). To implement this routine, **re-start again a new** `R` **session** and **set also the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of MCMC samples and the requested burn-in `burn` period.
+
+``` r
+rm(list=ls())
+library(ggplot2)
+library(coda)
+library(rstan)
+library(arm)
+
+# Load the data
+load("gene_data.RData")
+
+# Set model dimensions
+n <- dim(X)[1]
+p <- dim(X_data)[2] 
+
+# Number of MCMC samples from the posterior and burn-in
+N_sampl <- 25000
+burn <- 5000
+```
+Once the above steps have been done, let us first **define the key quantities to implement** the Hamiltonia no u-turn sampler.
+
+``` r
+# Model structure
+probmodel <- 'data{
+	  int<lower=0> K;
+	  int<lower=0> N;
+	  int<lower=0,upper=1> Y[N];
+	  matrix[N,K] X;
+}
+parameters {
+	vector[K] beta;
+}
+model {
+	for(i in 1:K)
+	    beta[i]~normal(0,sqrt(16));
+	for(n in 1:N)
+		Y[n] ~ bernoulli(Phi(X[n]*beta));
+}'
+
+# Data array
+data_prob <- list(N=n,K=p,Y=as.vector(y),X=X)
+```
+Finally **let us implement** the Hamiltonian no u-turn sampler by [Hoffman and Gelman (2014)](http://jmlr.org/papers/v15/hoffman14a.html). This requires the `R` package `rstan`. Note that also here the running-time is monitored for performance comparisons.
+
+``` r
+HMC_Samples <- stan(model_code = probmodel, data = data_prob, iter = N_sampl,warmup=burn,chains = 1,init="0",algorithm="NUTS",seed=123)
+
+time_HMC <- get_elapsed_time(HMC_Samples)[1] + get_elapsed_time(HMC_Samples)[2]
+beta_HMC <- t(extract(HMC_Samples)$beta)
+```
+
+Let us finally **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
+
+``` r
+# Posterior means via Monte Carlo
+HMC_means <- apply(beta_HMC,1,mean)
+
+# Posterior predictive probabilities via Monte Carlo
+pred_HMC <- rep(0,dim(X_new)[1])
+beta_HMC <- t(beta_HMC)
+
+for (i in 1:dim(X_new)[1]){
+pred_HMC[i] <- mean(pnorm((beta_HMC%*%X_new[i,]),0,1))
+print(i)}
+```
+Finally, let us **save the output in the file** `HMC_output.RData`
+``` r
+save(time_HMC,beta_HMC,HMC_means,pred_HMC,file="HMC_output.RData")
 ```
