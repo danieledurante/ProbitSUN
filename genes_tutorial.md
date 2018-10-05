@@ -159,7 +159,7 @@ p <- dim(X_data)[2]
 N_sampl <- 25000
 burn <- 5000
 ```
-Note that, **differently from the i.i.d. sampler, MCMC methods do not sample from the posterior since the beginning, but require a burn-in period** to reach convergence.  Once the above steps have been done, let us first **define the key quantities to implement** the data augmentation Gibbs sampler.
+Note that, **differently from the i.i.d. sampler, MCMC methods do not sample from the posterior since the beginning, but require a burn-in period** to reach convergence.  Let us now **define the key quantities to implement** the data augmentation Gibbs sampler.
 
 ``` r
 # Data array
