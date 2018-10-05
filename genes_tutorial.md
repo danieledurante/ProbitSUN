@@ -541,4 +541,4 @@ kable(Table_perf)
 Refer to Section 3 [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565) for comments on these above results. 
 
 
-![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/Moments_genes.png.png)
+![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/Moments_genes.png)
