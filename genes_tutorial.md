@@ -366,3 +366,82 @@ Finally, let us **save the output in the file** `MH_output.RData`
 ``` r
 save(time_MH,beta_MH,MH_means,pred_MH,file="MH_output.RData")
 ```
+Implementation of Exact Inference
+================
+As discussed in Section 3 of the paper, besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** `24` **held-out units**.
+
+To address the above goal let us **re-start again a new** `R` **session** and **set the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`).
+
+``` r
+rm(list=ls())
+library(mvtnorm)
+library(ggplot2)
+library(coda)
+library(TruncatedNormal)
+library(arm)
+
+# Load the data
+load("gene_data.RData")
+
+# Set model dimensions
+n <- dim(X)[1]
+p <- dim(X_data)[2] 
+```
+In order to compute the posterior mean of the regression coefficients (**via equation (6) in the article**) and the posterior predictive probabilities for the `24` held-out units (**via equation (7) in the article**), let us first define the required quantities.
+``` r
+# Relevant parameters of the Gaussian prior
+Omega <- diag(16,p,p)
+omega <- sqrt(diag(Omega[cbind(1:p,1:p)],p,p))
+bar_Omega <- solve(omega)%*%Omega%*%solve(omega)
+xi <- matrix(0,p,1)
+
+# Relevant parameters of the SUN posterior useful for (6) and (7)
+D <- diag(2*y-1,n,n)%*%X
+s <- diag(sqrt((D%*%Omega%*%t(D)+diag(1,n,n))[cbind(1:n,1:n)]),n,n)
+gamma_post <- solve(s)%*%D%*%xi
+Gamma_post <- solve(s)%*%(D%*%Omega%*%t(D)+diag(1,n,n))%*%solve(s)
+```
+To compute the **posterior mean of the regression coefficients** via equation (6) in the article, execute the code below.
+``` r
+set.seed(123)
+
+# Normalizing constant
+Norm_const <- mvNcdf(l=rep(-Inf,n),u=gamma_post,Sig=Gamma_post,10^4)$prob
+
+# Eta vector in equation (6)
+eta <- matrix(0,n,1)
+for (i in 1:n){
+eta[i,1] <- dnorm(gamma_post[i])*mvNcdf(l=rep(-Inf,n-1),u=gamma_post[-i]-(Gamma_post[,i])[-i]*gamma_post[i],Sig=(Gamma_post[,-i])[-i,]-(Gamma_post[,i])[-i]%*%t((Gamma_post[,i])[-i]),10^4)$prob
+print(i)}
+
+# Posterior means without sampling from the SUN posterior
+NUMERICAL_means <- xi+Omega%*%t(D)%*%solve(s)%*%(eta/Norm_const)
+```
+
+The **posterior predictive probabilities for the** `24` **held-out units**—calculated via equation (7) in the article—can be instead obtained from the code below.
+
+``` r
+set.seed(123)
+
+# Normalizing constant for training data
+Norm_const_obs <- mvNcdf(l=rep(-Inf,n),u=gamma_post,Sig=Gamma_post,10^4)$prob
+
+# Vector containing the posterior predictive probabilities for the 24 units
+pred_NUMERICAL<-rep(0,dim(X_new)[1])
+
+# Calculate these posterior predictive probabilities as in (7) without sampling from the SUN posterior
+for (i in 1:dim(X_new)[1]){
+
+D_new<-rbind(D,X_new[i,])
+s_new<-diag(sqrt((D_new%*%Omega%*%t(D_new)+diag(1,n+1,n+1))[cbind(1:(n+1),1:(n+1))]),n+1,n+1)
+gamma_new<-solve(s_new)%*%D_new%*%xi
+Gamma_new<-solve(s_new)%*%(D_new%*%Omega%*%t(D_new)+diag(1,n+1,n+1))%*%solve(s_new)	
+
+pred_NUMERICAL[i] <- mvNcdf(l=rep(-Inf,n+1),u=gamma_new,Sig=Gamma_new,10^4)$prob/Norm_const_obs
+
+print(i)}
+```
+Finally, let us **save the output in the file** `NUMERICAL_output.RData`
+``` r
+save(NUMERICAL_means,pred_NUMERICAL,file="NUMERICAL_output.RData")
+```
