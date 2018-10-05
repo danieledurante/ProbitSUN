@@ -401,7 +401,7 @@ s <- diag(sqrt((D%*%Omega%*%t(D)+diag(1,n,n))[cbind(1:n,1:n)]),n,n)
 gamma_post <- solve(s)%*%D%*%xi
 Gamma_post <- solve(s)%*%(D%*%Omega%*%t(D)+diag(1,n,n))%*%solve(s)
 ```
-To compute the **posterior mean of the regression coefficients** via equation (6) in the article, execute the code below.
+To compute the **posterior mean of the coefficients** via equation (6) in the article, execute the code below.
 ``` r
 set.seed(123)
 
