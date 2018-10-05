@@ -136,3 +136,84 @@ Finally, let us **save the output in the file** `SUN_output.RData`
 ``` r
 save(time_SUN,beta_SUN,SUN_means,pred_SUN,file="SUN_output.RData")
 ```
+
+Data augmentation Gibbs sampler
+------------------
+Let us focus now on the **data augmentation Gibbs sampler** by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350) (`R` package `bayesm`). To implement this routine, **re-start again a new** `R` **session** (this is useful to ensure that each algorithm is run with fully clean memory, thus guaranteeing fair comparisons on computational time). **Set also the working directory where** `gene_data.RData` **is placed**. Once this has been done, load again the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of MCMC samples and the requested burn-in period.
+
+``` r
+rm(list=ls())
+library(mvtnorm)
+library(ggplot2)
+library(coda)
+library(TruncatedNormal)
+library(arm)
+
+# Load the data
+load("gene_data.RData")
+
+# Set model dimensions
+n <- dim(X)[1]
+p <- dim(X_data)[2] 
+
+# Number of MCMC samples from the posterior and burn-in
+N_sampl <- 25000
+burn <- 5000
+```
+Note that, **differently from the iid sampler, MCMC methods do not sample from the posterior since the beginning, but require a burn-in period to reach convergence**.  Once the above steps have been done, let us first **define the key quantities to implement** the data augmentation Gibbs sampler.
+
+``` r
+# Relevant parameters of the Gaussian prior
+Omega <- diag(16,p,p)
+omega <- sqrt(diag(Omega[cbind(1:p,1:p)],p,p))
+bar_Omega <- solve(omega)%*%Omega%*%solve(omega)
+xi <- matrix(0,p,1)
+
+# Relevant parameters of the SUN posterior useful for sampling
+D <- diag(2*y-1,n,n)%*%X
+s <- diag(sqrt((D%*%Omega%*%t(D)+diag(1,n,n))[cbind(1:n,1:n)]),n,n)
+gamma_post <- solve(s)%*%D%*%xi
+Gamma_post <- solve(s)%*%(D%*%Omega%*%t(D)+diag(1,n,n))%*%solve(s)
+
+# Other useful quantities for sampling
+coef_V1 <- omega%*%bar_Omega%*%omega%*%t(D)%*%solve(D%*%Omega%*%t(D)+diag(1,n,n))%*%s
+coef_V0 <- omega
+
+Var_V0 <- bar_Omega-bar_Omega%*%omega%*%t(D)%*%solve(D%*%Omega%*%t(D)+diag(1,n,n))%*%D%*%omega%*%bar_Omega
+Var_V0 <- 0.5*(Var_V0+t(Var_V0))
+```
+Finally **let us implement** `Algorithm 1`. This requires calculating linear combinations of samples from *p*-variate Gaussians and *n*-variate truncated normals (using the methods in [Botev (2017)](https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12162)). Note that also the running-time is monitored in order to compare it with those of the MCMC competitors implemented in the upcoming subsections.
+
+``` r
+time_SUN <- system.time({
+set.seed(123)
+
+V_0 <- t(rmvnorm(N_sampl,mean=rep(0,p),sigma=Var_V0))
+V_0_scale_plus_xi <- apply(V_0,2,function(x) xi+coef_V0%*%x)
+
+V_1 <- mvrandn(-gamma_post,rep(Inf,n),Gamma_post,N_sampl)
+V_1_scale <- apply(V_1,2,function(x) coef_V1%*%x)
+
+beta_SUN <- V_0_scale_plus_xi+V_1_scale
+
+})
+```
+
+Let us finally **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the samples of the posterior and will be used in the comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
+
+``` r
+# Posterior means via Monte Carlo
+SUN_means <- apply(beta_SUN,1,mean)
+
+# Posterior predictive probabilities via Monte Carlo
+pred_SUN <- rep(0,dim(X_new)[1])
+beta_SUN <- t(beta_SUN)
+
+for (i in 1:dim(X_new)[1]){
+pred_SUN[i] <- mean(pnorm((beta_SUN%*%X_new[i,]),0,1))
+print(i)}
+```
+Finally, let us **save the output in the file** `SUN_output.RData`
+``` r
+save(time_SUN,beta_SUN,SUN_means,pred_SUN,file="SUN_output.RData")
+```
