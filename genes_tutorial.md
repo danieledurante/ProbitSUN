@@ -74,7 +74,7 @@ load("gene_data.RData")
 
 # Set model dimensions
 n <- dim(X)[1]
-p <- dim(X_data)[2] 
+p <- dim(X)[2] 
 
 # Number of i.i.d. samples from the posterior
 N_sampl <- 20000
@@ -153,7 +153,7 @@ load("gene_data.RData")
 
 # Set model dimensions
 n <- dim(X)[1]
-p <- dim(X_data)[2] 
+p <- dim(X)[2] 
 
 # Number of MCMC samples from the posterior and burn-in
 N_sampl <- 25000
@@ -219,7 +219,7 @@ load("gene_data.RData")
 
 # Set model dimensions
 n <- dim(X)[1]
-p <- dim(X_data)[2] 
+p <- dim(X)[2] 
 
 # Number of MCMC samples from the posterior and burn-in
 N_sampl <- 25000
@@ -293,7 +293,7 @@ load("gene_data.RData")
 
 # Set model dimensions
 n <- dim(X)[1]
-p <- dim(X_data)[2] 
+p <- dim(X)[2] 
 
 # Number of MCMC samples from the posterior and burn-in
 N_sampl <- 25000
@@ -383,7 +383,7 @@ load("gene_data.RData")
 
 # Set model dimensions
 n <- dim(X)[1]
-p <- dim(X_data)[2] 
+p <- dim(X)[2] 
 ```
 In order to compute the posterior mean of the regression coefficients (**via equation (6) in the article**) and the posterior predictive probabilities for the `24` held-out units (**via equation (7) in the article**), let us first define the required quantities.
 ``` r
