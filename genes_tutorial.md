@@ -163,13 +163,13 @@ Note that, **differently from the i.i.d. sampler, MCMC methods do not sample fro
 
 ``` r
 # Data array
-Data_GIBBS <- list(y=as.matrix(y,c(n,1)),X=X)
+Data_GIBBS = list(y=as.matrix(y,c(n,1)),X=X)
 
 # Prior settings
-Prior_GIBBS <- list(betabar=matrix(rep(0,p),c(p,1)),A=diag(1/16,p,p))
+Prior_GIBBS = list(betabar=matrix(rep(0,p),c(p,1)),A=diag(1/16,p,p))
 
 # MCMC settings
-Mcmc_GIBBS <- list(R=N_sampl,keep=1,nprint=0)
+Mcmc_GIBBS = list(R=N_sampl,keep=1,nprint=0)
 ```
 Finally, **let us implement** the Gibbs sampler by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350). This requires the `R` package `bayesm`. Note that also here the running-time is monitored for performance comparisons.
 
