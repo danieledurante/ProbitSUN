@@ -101,7 +101,7 @@ coef_V0 <- omega
 Var_V0 <- bar_Omega-bar_Omega%*%omega%*%t(D)%*%solve(D%*%Omega%*%t(D)+diag(1,n,n))%*%D%*%omega%*%bar_Omega
 Var_V0 <- 0.5*(Var_V0+t(Var_V0))
 ```
-Finally **let us implement** `Algorithm 1`. This requires calculating linear combinations of samples from *p*-variate Gaussians and *n*-variate truncated normals—using the methods in [Botev (2017)](https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12162). Note that also the running-time is monitored in order to compare it with those of the MCMC competitors implemented in the upcoming subsections.
+Finally, **let us implement** `Algorithm 1`. This requires calculating linear combinations of samples from *p*-variate Gaussians and *n*-variate truncated normals—using the methods in [Botev (2017)](https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12162). Note that also the running-time is monitored in order to compare it with those of the MCMC competitors implemented in the upcoming subsections.
 
 ``` r
 time_SUN <- system.time({
@@ -171,7 +171,7 @@ Prior_GIBBS <- list(betabar=matrix(rep(0,p),c(p,1)),A=diag(1/16,p,p))
 # MCMC settings
 Mcmc_GIBBS <- list(R=N_sampl,keep=1,nprint=0)
 ```
-Finally **let us implement** the Gibbs sampler by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350). This requires the `R` package `bayesm`. Note that also here the running-time is monitored for performance comparisons.
+Finally, **let us implement** the Gibbs sampler by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350). This requires the `R` package `bayesm`. Note that also here the running-time is monitored for performance comparisons.
 
 ``` r
 time_GIBBS <- system.time({
@@ -248,7 +248,7 @@ Y[n] ~ bernoulli(Phi(X[n]*beta));
 # Data array
 data_prob <- list(N=n,K=p,Y=as.vector(y),X=X)
 ```
-Finally **let us implement** the Hamiltonian no u-turn sampler by [Hoffman and Gelman (2014)](http://jmlr.org/papers/v15/hoffman14a.html). This requires the `R` package `rstan`. Note that also here the running-time is monitored for performance comparisons.
+Finally, **let us implement** the Hamiltonian no u-turn sampler by [Hoffman and Gelman (2014)](http://jmlr.org/papers/v15/hoffman14a.html). This requires the `R` package `rstan`. Note that also here the running-time is monitored for performance comparisons.
 
 ``` r
 HMC_Samples <- stan(model_code = probmodel, data = data_prob, iter = N_sampl,warmup=burn,chains = 1,init="0",algorithm="NUTS",seed=123)
@@ -335,7 +335,7 @@ yhat=rbern(length(probit_prob), probit_prob), parm=parm)
 return(Modelout)
 }
 ```
-Finally **let us implement** the adaptive Metropolis-Hastings by [Haario et al. (2001)](https://projecteuclid.org/euclid.bj/1080222083). This requires the `R` package `LaplacesDemon`. Note that also here the running-time is monitored for performance comparisons.
+Finally, **let us implement** the adaptive Metropolis-Hastings by [Haario et al. (2001)](https://projecteuclid.org/euclid.bj/1080222083). This requires the `R` package `LaplacesDemon`. Note that also here the running-time is monitored for performance comparisons.
 
 ``` r
 time_MH <- system.time({
