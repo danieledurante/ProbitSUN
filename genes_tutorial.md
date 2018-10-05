@@ -619,3 +619,5 @@ ggplot(data_final_plot, aes(x, value,color=factor(y)))+geom_point(size=1.5,alpha
 ggsave("Predict_genes.png", width=10,height=3)
 ```
 ![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/Predict_genes.png)
+
+Also in this case, refer to Section 3 [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565) for detailed comments on these above Figures. 
