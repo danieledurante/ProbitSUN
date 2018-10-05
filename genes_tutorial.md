@@ -531,3 +531,11 @@ Table_perf[4,1] <- N_sampl/time_MH[3]
 
 kable(Table_perf)
 ```
+|                            | Iterations per second|     Min ESS|     Q1 ESS|  Median ESS|
+|:---------------------------|---------------------:|-----------:|----------:|-----------:|
+|SUN sampler                 |             765.81406| 20000.00000| 20000.0000| 20000.00000|
+|Gibbs sampler               |              12.98246|    38.22557|  2331.6389|  3559.54465|
+|Hamiltonian no-turn sampler |              15.25254| 18092.44931| 20000.0000| 20000.00000|
+|Adaptive MH sampler         |              18.07997|    28.55497|    49.2213|    59.07417|
+
+Refer to Section 3 [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565) for comments on these above results. 
