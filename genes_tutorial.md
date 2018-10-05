@@ -320,15 +320,15 @@ MyData <- list(p=p, PGF=PGF, X=X, mon.names=mon.names, parm.names=parm.names, y=
 # Model structure
 Model <- function(parm, Data)
 {
-## Parameters
+### Parameters
 beta <- parm[1:Data$p]
-## Log-Prior
+### Log-Prior
 beta.prior <- sum(dnormv(beta, 0, 16, log=TRUE))
-## Log-Likelihood
+### Log-Likelihood
 mu <- tcrossprod(Data$X, t(beta))
 probit_prob <- pnorm(mu)
 LL <- sum(dbern(Data$y, probit_prob, log=TRUE))
-## Log-Posterior
+### Log-Posterior
 LP <- LL + beta.prior
 Modelout <- list(LP=LP, Dev=-2*LL, Monitor=LP, yhat=rbern(length(probit_prob), probit_prob), parm=parm)
 return(Modelout)
