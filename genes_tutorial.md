@@ -55,7 +55,7 @@ Implementation of the Different Sampling Schemes
 ================
 This section contains codes to implement the algorithm which provides **i.i.d. samples from the unified skew-normal posterior** (`Algorithm 1` in the paper), as well as state-of-the-art Markov Chain Monte Carlo (MCMC) competitors. These include the **data augmentation Gibbs sampler** by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350) (`R` package `bayesm`), the **Hamiltonian no u-turn sampler** by [Hoffman and Gelman (2014)](http://jmlr.org/papers/v15/hoffman14a.html) (`R` package `rstan`) and the **adaptive Metropolis-Hastings** in [Haario et al. (2001)](https://projecteuclid.org/euclid.bj/1080222083) (`R` package `LaplacesDemon`).
 
-i.i.d. sampling from the unified skew-normal posterior
+Direct sampling from the unified skew-normal posterior
 ------------------
 This subsection implements the **i.i.d. sampler from the unified skew-normal posterior** which relies on the novel results in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). This scheme is described in detail in Section 2.4 of the paper. A pseudo-code is also provided in `Algorithm 1`. 
 
