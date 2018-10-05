@@ -27,7 +27,7 @@ y_data <- c(0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,
 The design matrix comprising the covariates can be easily obtained by extracting the remaining columns in `dataset_gene`. Following [Gelman et al. (2008)](https://projecteuclid.org/euclid.aoas/1231424214), **such covariates are also rescaled and an intercept term is added**.
 
 ``` r
-X_data <- apply(dataset_gene,2,rescale)
+X_data <- apply(dataset_gene[,-1],2,rescale)
 X_data <- cbind(rep(1,dim(X_data)[1]),X_data)
 ```
 According to the discussion in Section 3 of the paper, **posterior inference** relies on `50` randomly chosen observations, whereas the remaining `24` are held-out to assess performance also in **out-of-sample classification via the posterior predictive distribution**. Let us, therefore, create these training and test sets.
