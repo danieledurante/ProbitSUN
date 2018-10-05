@@ -118,7 +118,7 @@ beta_SUN <- V_0_scale_plus_xi+V_1_scale
 })
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
 
 ``` r
 # Posterior means via Monte Carlo
@@ -184,7 +184,7 @@ GIBBS_Samples <- rbprobitGibbs(Data=Data_GIBBS, Prior=Prior_GIBBS, Mcmc=Mcmc_GIB
 beta_GIBBS <- t(GIBBS_Samples$betadraw[(burn+1):N_sampl,])
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -257,7 +257,7 @@ time_HMC <- get_elapsed_time(HMC_Samples)[1] + get_elapsed_time(HMC_Samples)[2]
 beta_HMC <- t(extract(HMC_Samples)$beta)
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -348,7 +348,7 @@ MH_Samples <- LaplacesDemon(Model,Data=MyData,Initial.Values=c(EPgene$m),Covar=(
 beta_MH <- t(MH_Samples$Posterior1[(burn+1):N_sampl,])
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
 
 ``` r
 # Posterior means via Monte Carlo
