@@ -175,8 +175,8 @@ Finally, **let us implement** the Gibbs sampler by [Albert and Chib (1993)](http
 
 ``` r
 start_time <- Sys.time()
-set.seed(123)
 
+set.seed(123)
 GIBBS_Samples <- rbprobitGibbs(Data=Data_GIBBS, Prior=Prior_GIBBS, Mcmc=Mcmc_GIBBS)
 
 end_time <- Sys.time()
@@ -338,8 +338,8 @@ Finally, **let us implement** the adaptive Metropolis-Hastings by [Haario et al.
 
 ``` r
 start_time <- Sys.time()
-set.seed(123)
 
+set.seed(123)
 MH_Samples <- LaplacesDemon(Model,Data=MyData,Initial.Values=c(EPgene$m),Covar=(2.38^2/p)*EPgene$V,Iterations=N_sampl,Thinning=1,Algorithm="AM", Specs=list(Adaptive=burn, Periodicity=100))
 
 end_time <- Sys.time()
