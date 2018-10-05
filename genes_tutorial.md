@@ -314,8 +314,7 @@ PGF <- function(Data) {
 beta <- rnorm(Data$p)
 return(beta)
 }
-MyData <- list(p=p, PGF=PGF, X=X, mon.names=mon.names,
-parm.names=parm.names, y=y)
+MyData <- list(p=p, PGF=PGF, X=X, mon.names=mon.names, parm.names=parm.names, y=y)
 
 # Model structure
 Model <- function(parm, Data)
@@ -330,8 +329,7 @@ probit_prob <- pnorm(mu)
 LL <- sum(dbern(Data$y, probit_prob, log=TRUE))
 ## Log-Posterior
 LP <- LL + beta.prior
-Modelout <- list(LP=LP, Dev=-2*LL, Monitor=LP,
-yhat=rbern(length(probit_prob), probit_prob), parm=parm)
+Modelout <- list(LP=LP, Dev=-2*LL, Monitor=LP, yhat=rbern(length(probit_prob), probit_prob), parm=parm)
 return(Modelout)
 }
 ```
