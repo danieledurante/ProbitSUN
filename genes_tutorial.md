@@ -101,7 +101,7 @@ coef_V0 <- omega
 Var_V0 <- bar_Omega-bar_Omega%*%omega%*%t(D)%*%solve(D%*%Omega%*%t(D)+diag(1,n,n))%*%D%*%omega%*%bar_Omega
 Var_V0 <- 0.5*(Var_V0+t(Var_V0))
 ```
-Finally **let us implement** `Algorithm 1`. This requires calculating linear combinations of samples from *p*-variate Gaussians and *n*-variate truncated normals (using the methods in [Botev (2017)](https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12162)). Note that also the running-time is monitored in order to compare it with those of the MCMC competitors implemented in the upcoming subsections.
+Finally **let us implement** `Algorithm 1`. This requires calculating linear combinations of samples from *p*-variate Gaussians and *n*-variate truncated normals—using the methods in [Botev (2017)](https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12162). Note that also the running-time is monitored in order to compare it with those of the MCMC competitors implemented in the upcoming subsections.
 
 ``` r
 time_SUN <- system.time({
