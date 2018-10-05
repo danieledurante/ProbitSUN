@@ -427,15 +427,15 @@ set.seed(123)
 Norm_const_obs <- mvNcdf(l=rep(-Inf,n),u=gamma_post,Sig=Gamma_post,10^4)$prob
 
 # Vector containing the posterior predictive probabilities for the 24 units
-pred_NUMERICAL<-rep(0,dim(X_new)[1])
+pred_NUMERICAL <- rep(0,dim(X_new)[1])
 
 # Calculate these posterior predictive probabilities as in (7) without sampling from the SUN posterior
 for (i in 1:dim(X_new)[1]){
 
-D_new<-rbind(D,X_new[i,])
-s_new<-diag(sqrt((D_new%*%Omega%*%t(D_new)+diag(1,n+1,n+1))[cbind(1:(n+1),1:(n+1))]),n+1,n+1)
-gamma_new<-solve(s_new)%*%D_new%*%xi
-Gamma_new<-solve(s_new)%*%(D_new%*%Omega%*%t(D_new)+diag(1,n+1,n+1))%*%solve(s_new)	
+D_new <- rbind(D,X_new[i,])
+s_new <- diag(sqrt((D_new%*%Omega%*%t(D_new)+diag(1,n+1,n+1))[cbind(1:(n+1),1:(n+1))]),n+1,n+1)
+gamma_new <- solve(s_new)%*%D_new%*%xi
+Gamma_new <- solve(s_new)%*%(D_new%*%Omega%*%t(D_new)+diag(1,n+1,n+1))%*%solve(s_new)	
 
 pred_NUMERICAL[i] <- mvNcdf(l=rep(-Inf,n+1),u=gamma_new,Sig=Gamma_new,10^4)$prob/Norm_const_obs
 
