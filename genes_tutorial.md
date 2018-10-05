@@ -225,7 +225,7 @@ p <- dim(X_data)[2]
 N_sampl <- 25000
 burn <- 5000
 ```
-Once the above steps have been done, let us **define the key quantities to implement** the Hamiltonian no u-turn sampler.
+Let us now **define the key quantities to implement** the Hamiltonian no u-turn sampler.
 
 ``` r
 # Model structure
@@ -278,7 +278,7 @@ save(time_HMC,beta_HMC,HMC_means,pred_HMC,file="HMC_output.RData")
 
 Adaptive Metropolis-Hastings
 ------------------
-Let us finally consider the **adaptive Metropolis-Hastings** by [Haario et al. (2001)](https://projecteuclid.org/euclid.bj/1080222083) (`R` package `LaplacesDemon`). To implement this routine, **re-start again a new** `R` **session** and **set also the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of MCMC samples and the requested burn-in `burn` period.
+Let us finally consider the **adaptive Metropolis-Hastings** by [Haario et al. (2001)](https://projecteuclid.org/euclid.bj/1080222083) (`R` package `LaplacesDemon`). To implement this routine, **re-start again a new** `R` **session** and **set also the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of MCMC samples and the requested burn-in `burn`.
 
 ``` r
 rm(list=ls())
@@ -304,7 +304,7 @@ As already discussed in the [`README.md`](https://github.com/danieledurante/Prob
 set.seed(123)
 EPgene <- EPprobit(X = X, Y = y, s = 16)
 ```
-Once the above steps have been done, let us **define the key quantities to implement** the adaptive Metropolis-Hastings.
+Let us now **define the key quantities to implement** the adaptive Metropolis-Hastings.
 
 ``` r
 # Data structure
