@@ -485,7 +485,7 @@ Table_perf <- matrix(0,4,4)
 rownames(Table_perf) <- c("Unified skew-normal Sampler", "Gibbs sampler", "Hamiltonian no-turn sampler", "Adaptive Metropolis-Hastings Sampler")
 colnames(Table_perf) <- c("Iterations per second", "Min ESS", "Q1 ESS", "Median ESS")
 ```
-**Note** that the three MCMC methods produce `N_sampl <- 25000` samples—since a burn-in of *5000* is required—whereas `Algorithm 1` draws directly i.i.d. from the unified skew-normal posterior, and hence, only `N_sampl_SUN <- 20000` samples are required. Let us now calculate the key quantities in **Table 1** and display it.
+**Note** that the three MCMC methods produce `N_sampl <- 25000` samples—since a burn-in of 5000 is required—whereas `Algorithm 1` draws directly i.i.d. from the unified skew-normal posterior, and hence, only `N_sampl_SUN <- 20000` samples are required. Let us now calculate the key quantities in **Table 1** and display it.
 ``` r
 #----------------
 # Unified skew-normal Sampler
