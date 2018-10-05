@@ -445,3 +445,89 @@ Finally, let us **save the output in the file** `NUMERICAL_output.RData`
 ``` r
 save(NUMERICAL_means,pred_NUMERICAL,file="NUMERICAL_output.RData")
 ```
+Performance Assessments
+================
+This section concludes the analysis by providing **codes to reproduce Table 1 along with Figures 2 and 3** in Section 3 of the paper [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). More specifically, **Table 1** compares the computational performance of the sampling schemes implemented above, whereas **Figures 2 and 3** assess to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565)—with a focus on posterior means and posterior predictive probabilities.
+
+Before providing the codes to reproduce Table 1 along with Figures 2 and 3, **re-start again a new** `R` **session** and **set the working directory where** `gene_data.RData`, `SUN_output.RData`, `GIBBS_output.RData`, `HMC_output.RData`, `MH_output.RData` and `NUMERICAL_output.RData` **are placed**. Once this has been done, load these data files along with useful `R` packages.
+
+``` r
+rm(list=ls())
+
+library(ggplot2)
+library(coda)
+library(RColorBrewer)
+library(MASS) 
+library(reshape)
+library(arm)
+library(knitr)
+
+# Load the data
+load("gene_data.RData")
+
+# Load the output of the sampling algorithms
+load("SUN_output.RData")
+load("GIBBS_output.RData")
+load("HMC_output.RData")
+load("MH_output.RData")
+
+# Load the estimates obtained without sampling from the posterior
+load("NUMERICAL_output.RData")
+```
+
+To **reproduce Table 1**, create an empty matrix `Table_perf` and set the total number of samples provided by the algorithms implemented above. 
+
+``` r
+N_sampl_SUN <- 20000
+N_sampl <- 25000
+
+Table_perf <- matrix(0,4,4)
+rownames(Table_perf) <- c("Unified skew-normal Sampler", "Gibbs sampler", "Hamiltonian no-turn sampler", "Adaptive Metropolis-Hastings Sampler")
+colnames(Table_perf) <- c("Iterations per second", "Min ESS", "Q1 ESS", "Median ESS")
+```
+**Note** that the three MCMC methods produce `N_sampl <- 25000` samples—since a burn-in of *5000* is required—whereas `Algorithm 1` draws directly i.i.d. from the unified skew-normal posterior, and hence, only `N_sampl_SUN <- 20000` samples are required. Let us now calculate the key quantities in **Table 1** and display it.
+``` r
+#----------------
+# Unified skew-normal Sampler
+#----------------
+
+# Summaries for the effective sample sizes (ESS)
+# (Being and independent sampler it has always ESS = N_sampl_SUN)
+Table_perf[1,c(2:4)] <- N_sampl_SUN
+
+# Iterations per second
+Table_perf[1,1] <- N_sampl_SUN/time_SUN[3]
+
+#----------------
+# Gibbs sampler
+#----------------
+
+# Summaries for the effective sample sizes (ESS)
+Table_perf[2,c(2:4)] <- summary(apply(beta_GIBBS,2,effectiveSize))[1:3]
+
+# Iterations per second
+Table_perf[2,1] <- N_sampl/time_GIBBS[3]
+
+#----------------
+# Hamiltonian no-turn sampler
+#----------------
+
+# Summaries for the effective sample sizes (ESS)
+Table_perf[3,c(2:4)] <- summary(apply(beta_HMC,2,effectiveSize))[1:3]
+
+# Iterations per second
+Table_perf[3,1] <- N_sampl/time_HMC
+
+#----------------
+# Adaptive Metropolis-Hastings Sampler
+#----------------
+
+# Summaries for the effective sample sizes (ESS)
+Table_perf[4,c(2:4)] <- summary(apply(beta_MH,2,effectiveSize))[1:3]
+
+# Iterations per second
+Table_perf[4,1] <- N_sampl/time_MH[3]
+
+
+kable(Table_perf)
+```
