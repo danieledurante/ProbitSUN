@@ -104,18 +104,18 @@ Var_V0 <- 0.5*(Var_V0+t(Var_V0))
 Finally, **let us implement** `Algorithm 1`. This requires calculating linear combinations of samples from *p*-variate Gaussians and *n*-variate truncated normals—using the methods in [Botev (2017)](https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12162). Note that also the running-time is monitored in order to compare it with those of the MCMC competitors implemented in the upcoming subsections.
 
 ``` r
-time_SUN <- system.time({
+start_time <- Sys.time()
 set.seed(123)
 
 V_0 <- t(rmvnorm(N_sampl,mean=rep(0,p),sigma=Var_V0))
 V_0_scale_plus_xi <- apply(V_0,2,function(x) xi+coef_V0%*%x)
-
 V_1 <- mvrandn(-gamma_post,rep(Inf,n),Gamma_post,N_sampl)
 V_1_scale <- apply(V_1,2,function(x) coef_V1%*%x)
 
 beta_SUN <- V_0_scale_plus_xi+V_1_scale
+end_time <- Sys.time()
 
-})
+time_SUN <- (end_time-start_time)[[1]]
 ```
 
 Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
@@ -174,14 +174,15 @@ Mcmc_GIBBS <- list(R=N_sampl,keep=1,nprint=0)
 Finally, **let us implement** the Gibbs sampler by [Albert and Chib (1993)](https://www.jstor.org/stable/2290350). This requires the `R` package `bayesm`. Note that also here the running-time is monitored for performance comparisons.
 
 ``` r
-time_GIBBS <- system.time({
-
+start_time <- Sys.time()
 set.seed(123)
+
 GIBBS_Samples <- rbprobitGibbs(Data=Data_GIBBS, Prior=Prior_GIBBS, Mcmc=Mcmc_GIBBS)
 
-})
+end_time <- Sys.time()
 
 beta_GIBBS <- t(GIBBS_Samples$betadraw[(burn+1):N_sampl,])
+time_GIBBS <- (end_time-start_time)[[1]]
 ```
 
 Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
@@ -253,8 +254,8 @@ Finally, **let us implement** the Hamiltonian no u-turn sampler by [Hoffman and 
 ``` r
 HMC_Samples <- stan(model_code = probmodel, data = data_prob, iter = N_sampl,warmup=burn,chains = 1,init="0",algorithm="NUTS",seed=123)
 
-time_HMC <- get_elapsed_time(HMC_Samples)[1] + get_elapsed_time(HMC_Samples)[2]
 beta_HMC <- t(extract(HMC_Samples)$beta)
+time_HMC <- get_elapsed_time(HMC_Samples)[1] + get_elapsed_time(HMC_Samples)[2]
 ```
 
 Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
@@ -336,14 +337,15 @@ return(Modelout)
 Finally, **let us implement** the adaptive Metropolis-Hastings by [Haario et al. (2001)](https://projecteuclid.org/euclid.bj/1080222083). This requires the `R` package `LaplacesDemon`. Note that also here the running-time is monitored for performance comparisons.
 
 ``` r
-time_MH <- system.time({
-	
+start_time <- Sys.time()
 set.seed(123)
+
 MH_Samples <- LaplacesDemon(Model,Data=MyData,Initial.Values=c(EPgene$m),Covar=(2.38^2/p)*EPgene$V,Iterations=N_sampl,Thinning=1,Algorithm="AM", Specs=list(Adaptive=burn, Periodicity=100))
 
-})
+end_time <- Sys.time()
 
 beta_MH <- t(MH_Samples$Posterior1[(burn+1):N_sampl,])
+time_MH <- (end_time-start_time)[[1]]
 ```
 
 Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
@@ -494,7 +496,7 @@ colnames(Table_perf) <- c("Iterations per second", "Min ESS", "Q1 ESS", "Median 
 Table_perf[1,c(2:4)] <- N_sampl_SUN
 
 # Iterations per second
-Table_perf[1,1] <- N_sampl_SUN/time_SUN[3]
+Table_perf[1,1] <- N_sampl_SUN/time_SUN
 
 #----------------
 # Gibbs sampler
@@ -504,7 +506,7 @@ Table_perf[1,1] <- N_sampl_SUN/time_SUN[3]
 Table_perf[2,c(2:4)] <- summary(apply(beta_GIBBS,2,effectiveSize))[1:3]
 
 # Iterations per second
-Table_perf[2,1] <- N_sampl/time_GIBBS[3]
+Table_perf[2,1] <- N_sampl/time_GIBBS
 
 #----------------
 # Hamiltonian no-turn sampler
@@ -524,7 +526,7 @@ Table_perf[3,1] <- N_sampl/time_HMC
 Table_perf[4,c(2:4)] <- summary(apply(beta_MH,2,effectiveSize))[1:3]
 
 # Iterations per second
-Table_perf[4,1] <- N_sampl/time_MH[3]
+Table_perf[4,1] <- N_sampl/time_MH
 
 
 kable(Table_perf)
