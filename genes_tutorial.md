@@ -230,19 +230,19 @@ Let us now **define the key quantities to implement** the Hamiltonian no u-turn 
 ``` r
 # Model structure
 probmodel <- 'data{
-	  int<lower=0> K;
-	  int<lower=0> N;
-	  int<lower=0,upper=1> Y[N];
-	  matrix[N,K] X;
+int<lower=0> K;
+int<lower=0> N;
+int<lower=0,upper=1> Y[N];
+matrix[N,K] X;
 }
 parameters {
-	vector[K] beta;
+vector[K] beta;
 }
 model {
-	for(i in 1:K)
-	    beta[i]~normal(0,sqrt(16));
-	for(n in 1:N)
-		Y[n] ~ bernoulli(Phi(X[n]*beta));
+for(i in 1:K)
+beta[i] ~ normal(0,sqrt(16));
+for(n in 1:N)
+Y[n] ~ bernoulli(Phi(X[n]*beta));
 }'
 
 # Data array
