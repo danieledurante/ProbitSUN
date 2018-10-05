@@ -115,7 +115,7 @@ V_1_scale <- apply(V_1,2,function(x) coef_V1%*%x)
 beta_SUN <- V_0_scale_plus_xi+V_1_scale
 end_time <- Sys.time()
 
-time_SUN <- (end_time-start_time)[[1]]
+time_SUN <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
 Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
@@ -182,7 +182,7 @@ GIBBS_Samples <- rbprobitGibbs(Data=Data_GIBBS, Prior=Prior_GIBBS, Mcmc=Mcmc_GIB
 end_time <- Sys.time()
 
 beta_GIBBS <- t(GIBBS_Samples$betadraw[(burn+1):N_sampl,])
-time_GIBBS <- (end_time-start_time)[[1]]
+time_GIBBS <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
 Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
@@ -345,7 +345,7 @@ MH_Samples <- LaplacesDemon(Model,Data=MyData,Initial.Values=c(EPgene$m),Covar=(
 end_time <- Sys.time()
 
 beta_MH <- t(MH_Samples$Posterior1[(burn+1):N_sampl,])
-time_MH <- (end_time-start_time)[[1]]
+time_MH <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
 Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
