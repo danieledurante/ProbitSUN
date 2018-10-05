@@ -225,7 +225,7 @@ p <- dim(X_data)[2]
 N_sampl <- 25000
 burn <- 5000
 ```
-Once the above steps have been done, let us first **define the key quantities to implement** the Hamiltonian no u-turn sampler.
+Once the above steps have been done, let us **define the key quantities to implement** the Hamiltonian no u-turn sampler.
 
 ``` r
 # Model structure
