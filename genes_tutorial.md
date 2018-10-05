@@ -536,7 +536,7 @@ kable(Table_perf)
 |Hamiltonian no-turn sampler |              15.25254| 18092.44931| 20000.0000| 20000.00000|
 |Adaptive MH sampler         |              18.07997|    28.55497|    49.2213|    59.07417|
 
-Refer to Section 3 in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565) for detailed comments on these above results. 
+Refer to Section 3 in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565) for detailed comments on the above results. 
 
 To obtain **Figure 2**, consider instead the code below.
 
