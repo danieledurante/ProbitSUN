@@ -225,7 +225,7 @@ p <- dim(X_data)[2]
 N_sampl <- 25000
 burn <- 5000
 ```
-Once the above steps have been done, let us first **define the key quantities to implement** the Hamiltonia no u-turn sampler.
+Once the above steps have been done, let us first **define the key quantities to implement** the Hamiltonian no u-turn sampler.
 
 ``` r
 # Model structure
@@ -274,4 +274,95 @@ print(i)}
 Finally, let us **save the output in the file** `HMC_output.RData`
 ``` r
 save(time_HMC,beta_HMC,HMC_means,pred_HMC,file="HMC_output.RData")
+```
+
+Adaptive Metropolis-Hastings
+------------------
+Let us finally consider the **adaptive Metropolis-Hastings** by [Haario et al. (2001)](https://projecteuclid.org/euclid.bj/1080222083) (`R` package `LaplacesDemon`). To implement this routine, **re-start again a new** `R` **session** and **set also the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of MCMC samples and the requested burn-in `burn` period.
+
+``` r
+rm(list=ls())
+library(ggplot2)
+library(coda)
+library(arm)
+library(LaplacesDemon)
+library(EPGLM)
+
+# Load the data
+load("gene_data.RData")
+
+# Set model dimensions
+n <- dim(X)[1]
+p <- dim(X_data)[2] 
+
+# Number of MCMC samples from the posterior and burn-in
+N_sampl <- 25000
+burn <- 5000
+```
+As already discussed in the [`README.md`](https://github.com/danieledurante/ProbitSUN/blob/master/README.md) file, this routine is also carefully initialized via expectation propagation estimates for the location and scale of the posterior. Such quantities can be obtained via the `R` package `EPGLM`. Let us calculate them.
+``` r
+set.seed(123)
+EPgene <- EPprobit(X = X, Y = y, s = 16)
+```
+Once the above steps have been done, let us **define the key quantities to implement** the adaptive Metropolis-Hastings.
+
+``` r
+# Data structure
+mon.names <- "LP"
+parm.names <- as.parm.names(list(beta=rep(0,p)))
+PGF <- function(Data) {
+beta <- rnorm(Data$p)
+return(beta)
+}
+MyData <- list(p=p, PGF=PGF, X=X, mon.names=mon.names,
+parm.names=parm.names, y=y)
+
+# Model structure
+Model <- function(parm, Data)
+{
+## Parameters
+beta <- parm[1:Data$p]
+## Log-Prior
+beta.prior <- sum(dnormv(beta, 0, 16, log=TRUE))
+## Log-Likelihood
+mu <- tcrossprod(Data$X, t(beta))
+probit_prob <- pnorm(mu)
+LL <- sum(dbern(Data$y, probit_prob, log=TRUE))
+## Log-Posterior
+LP <- LL + beta.prior
+Modelout <- list(LP=LP, Dev=-2*LL, Monitor=LP,
+yhat=rbern(length(probit_prob), probit_prob), parm=parm)
+return(Modelout)
+}
+```
+Finally **let us implement** the adaptive Metropolis-Hastings by [Haario et al. (2001)](https://projecteuclid.org/euclid.bj/1080222083). This requires the `R` package `LaplacesDemon`. Note that also here the running-time is monitored for performance comparisons.
+
+``` r
+time_MH <- system.time({
+	
+set.seed(123)
+MH_Samples <- LaplacesDemon(Model,Data=MyData,Initial.Values=c(EPgene$m),Covar=(2.38^2/p)*EPgene$V,Iterations=N_sampl,Thinning=1,Algorithm="AM", Specs=list(Adaptive=burn, Periodicity=100))
+
+})
+
+beta_MH <- t(MH_Samples$Posterior1[(burn+1):N_sampl,])
+```
+
+Let us finally **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. The quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
+
+``` r
+# Posterior means via Monte Carlo
+MH_means <- apply(beta_MH,1,mean)
+
+# Posterior predictive probabilities via Monte Carlo
+pred_MH <- rep(0,dim(X_new)[1])
+beta_MH <- t(beta_MH)
+
+for (i in 1:dim(X_new)[1]){
+pred_MH[i] <- mean(pnorm((beta_MH%*%X_new[i,]),0,1))
+print(i)}
+```
+Finally, let us **save the output in the file** `MH_output.RData`
+``` r
+save(time_MH,beta_MH,MH_means,pred_MH,file="MH_output.RData")
 ```
