@@ -265,7 +265,7 @@ print(i)}
 ```
 Finally, **save the output in the file** `HMC_output.RData`
 ``` r
-save(time_HMC,beta_HMC,HMC_means,pred_HMC,file="HMC_output.RData")
+save(time_HMC,HMC_Samples,HMC_means,pred_HMC,file="HMC_output.RData")
 ```
 
 Adaptive Metropolis-Hastings
@@ -497,7 +497,7 @@ Table_perf[2,1] <- N_sampl/time_GIBBS
 #----------------
 
 # Summaries for the effective sample sizes (ESS)
-Table_perf[3,c(2:4)] <- summary(apply(beta_HMC,2,effectiveSize))[1:3]
+Table_perf[3,c(2:4)] <- summary((summary(HMC_Samples)$summary)[1:dim(X)[2],9])[1:3]
 
 # Iterations per second
 Table_perf[3,1] <- N_sampl/time_HMC
