@@ -64,10 +64,7 @@ To implement this routine, **let us re-start a new** `R` **session** and **set t
 ``` r
 rm(list=ls())
 library(mvtnorm)
-library(ggplot2)
-library(coda)
 library(TruncatedNormal)
-library(arm)
 
 # Load the data
 load("gene_data.RData")
@@ -143,9 +140,6 @@ Let us focus now on the **data augmentation Gibbs sampler** by [Albert and Chib 
 
 ``` r
 rm(list=ls())
-library(ggplot2)
-library(coda)
-library(arm)
 library(bayesm)
 
 # Load the data
@@ -210,10 +204,7 @@ Let us consider now the **Hamiltonian no u-turn sampler** by [Hoffman and Gelman
 
 ``` r
 rm(list=ls())
-library(ggplot2)
-library(coda)
 library(rstan)
-library(arm)
 
 # Load the data
 load("gene_data.RData")
@@ -283,9 +274,6 @@ Let us finally consider the **adaptive Metropolis-Hastings** by [Haario et al. (
 
 ``` r
 rm(list=ls())
-library(ggplot2)
-library(coda)
-library(arm)
 library(LaplacesDemon)
 library(EPGLM)
 
@@ -375,10 +363,7 @@ To address the above goal, let us **re-start again a new** `R` **session** and *
 ``` r
 rm(list=ls())
 library(mvtnorm)
-library(ggplot2)
-library(coda)
 library(TruncatedNormal)
-library(arm)
 
 # Load the data
 load("gene_data.RData")
@@ -459,7 +444,6 @@ library(coda)
 library(RColorBrewer)
 library(MASS) 
 library(reshape)
-library(arm)
 library(knitr)
 
 # Load the data
