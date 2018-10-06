@@ -245,7 +245,7 @@ Finally, **let us implement** the Hamiltonian no u-turn sampler by [Hoffman and 
 ``` r
 HMC_Samples <- stan(model_code = probmodel, data = data_prob, iter = N_sampl,warmup=burn,chains = 1,init="0",algorithm="NUTS",seed=123)
 
-beta_HMC <- t(extract(HMC_Samples,permuted = FALSE)$beta)
+beta_HMC <- t(as.matrix(extract(HMC_Samples,permuted = FALSE)[,1,1:p]))
 time_HMC <- get_elapsed_time(HMC_Samples)[1] + get_elapsed_time(HMC_Samples)[2]
 ```
 
