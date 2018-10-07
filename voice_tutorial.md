@@ -110,7 +110,7 @@ end_time <- Sys.time()
 time_SUN <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `26` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -174,7 +174,7 @@ beta_GIBBS <- t(GIBBS_Samples$betadraw[(burn+1):N_sampl,])
 time_GIBBS <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `26` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -244,7 +244,7 @@ beta_HMC <- t(extract(HMC_Samples)$beta)
 time_HMC <- get_elapsed_time(HMC_Samples)[1] + get_elapsed_time(HMC_Samples)[2]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `26` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -331,7 +331,7 @@ beta_MH <- t(MH_Samples$Posterior1[(burn+1):N_sampl,])
 time_MH <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `26` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -351,7 +351,7 @@ save(time_MH,beta_MH,MH_means,pred_MH,file="MH_output.RData")
 ```
 Implementation of Exact Inference
 ================
-As discussed in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md), besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** `24` **held-out units**.
+As discussed in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md), besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** `26` **held-out units**.
 
 To address the above goal, let us **re-start again a new** `R` **session** and **set the working directory where** `voice_data.RData` **is placed**. Once this has been done, load the file `voice_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`).
 
@@ -367,7 +367,7 @@ load("voice_data.RData")
 n <- dim(X)[1]
 p <- dim(X)[2] 
 ```
-In order to compute the posterior mean of the regression coefficients (**via equation (6) in the article**) and the posterior predictive probabilities for the `24` held-out units (**via equation (7) in the article**), let us first define the required quantities.
+In order to compute the posterior mean of the regression coefficients (**via equation (6) in the article**) and the posterior predictive probabilities for the `26` held-out units (**via equation (7) in the article**), let us first define the required quantities.
 ``` r
 # Relevant parameters of the Gaussian prior
 Omega <- diag(16,p,p)
@@ -398,7 +398,7 @@ print(i)}
 NUMERICAL_means <- xi+Omega%*%t(D)%*%solve(s)%*%(eta/Norm_const)
 ```
 
-The **posterior predictive probabilities for the** `24` **held-out units**—calculated via equation (7) in the article—can be instead obtained from the code below.
+The **posterior predictive probabilities for the** `26` **held-out units**—calculated via equation (7) in the article—can be instead obtained from the code below.
 
 ``` r
 set.seed(123)
