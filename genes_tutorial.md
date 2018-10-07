@@ -5,7 +5,7 @@ As described in the [`README.md`](https://github.com/danieledurante/ProbitSUN/bl
 
 Upload and Clean the Cancer SAGE Dataset
 ================
-As discussed in Section 3 of the paper, the focus is on learning how gene expression (monitored at `p - 1 = 516` tags) relates to the probability of a cancerous tissue. Data are available for `n = 74` measurements and can be downloaded at [Cancer SAGE](http://www.i3s.unice.fr/~pasquier/web/?Research_Activities___Dataset_Downloads___Cancer_SAGE) by clicking [here](http://www.i3s.unice.fr/~pasquier/web/userfiles/downloads/datasets/SAGE_filtered_small_dataset.zip).
+As discussed in Section 3 of the paper, the focus is on learning how gene expression (monitored at *p - 1 = 516* tags) relates to the probability of a cancerous tissue. Data are available for *n = 74* measurements and can be downloaded at [Cancer SAGE](http://www.i3s.unice.fr/~pasquier/web/?Research_Activities___Dataset_Downloads___Cancer_SAGE) by clicking [here](http://www.i3s.unice.fr/~pasquier/web/userfiles/downloads/datasets/SAGE_filtered_small_dataset.zip).
  
 The download provides a directory `SAGE_filtered_small_dataset` which contains several datasets. Here the focus is on `dataset_74-516.csv`. To **clean this dataset**, first set the working directory where `dataset_74-516.csv` is placed. Once this has been done, **clean the workspace, and load the data along with useful** `R` **packages**.
 
@@ -16,7 +16,7 @@ library(arm)
 dataset_gene <- read.csv("dataset_74-516.csv",header=TRUE,sep="")
 ```
 
-The dataframe  `dataset_gene` contains information on the **response variable** (first column of `dataset_gene`), and on the **covariates** (subsequent columns of `dataset_gene`). More specifically, the first column `dataset_gene[,1]` contains names of tissues followed by a letter which is either `N` (normal) or `C` (cancerous). Exploiting this information, **let us create the response by hand**.
+The dataframe  `dataset_gene` contains information on the **response variable** (first column of `dataset_gene`), and on the **covariates** (subsequent columns of `dataset_gene`). More specifically, the first column `dataset_gene[,1]` contains names of tissues followed by a letter which is either *N* (normal) or *C* (cancerous). Exploiting this information, **let us create the response by hand**.
    
 ``` r
 y_data <- c(0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,
@@ -30,7 +30,7 @@ The design matrix comprising the covariates can be easily obtained by extracting
 X_data <- apply(dataset_gene[,-1],2,rescale)
 X_data <- cbind(rep(1,dim(X_data)[1]),X_data)
 ```
-According to the discussion in Section 3 of the paper, **posterior inference** relies on `50` randomly chosen observations, whereas the remaining `24` are held-out to assess performance also in **out-of-sample classification via the posterior predictive distribution**. Let us, therefore, create these training and test sets.
+According to the discussion in Section 3 of the paper, **posterior inference** relies on *50* randomly chosen observations, whereas the remaining *24* are held-out to assess performance also in **out-of-sample classification via the posterior predictive distribution**. Let us, therefore, create these training and test sets.
 
 ``` r
 set.seed(1)
@@ -115,7 +115,7 @@ end_time <- Sys.time()
 time_SUN <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** *24* **held-out units**. Such quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
 
 ``` r
 # Posterior means via Monte Carlo
@@ -179,7 +179,7 @@ beta_GIBBS <- t(GIBBS_Samples$betadraw[(burn+1):N_sampl,])
 time_GIBBS <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** *24* **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -249,7 +249,7 @@ beta_HMC <- t(extract(HMC_Samples)$beta)
 time_HMC <- get_elapsed_time(HMC_Samples)[1] + get_elapsed_time(HMC_Samples)[2]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** *24* **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -336,7 +336,7 @@ beta_MH <- t(MH_Samples$Posterior1[(burn+1):N_sampl,])
 time_MH <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** *24* **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -356,7 +356,7 @@ save(time_MH,beta_MH,MH_means,pred_MH,file="MH_output.RData")
 ```
 Implementation of Exact Inference
 ================
-As discussed in Section 3 of the paper, besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** `24` **held-out units**.
+As discussed in Section 3 of the paper, besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** *24* **held-out units**.
 
 To address the above goal, let us **re-start again a new** `R` **session** and **set the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`).
 
@@ -372,7 +372,7 @@ load("gene_data.RData")
 n <- dim(X)[1]
 p <- dim(X)[2] 
 ```
-In order to compute the posterior mean of the regression coefficients (**via equation (6) in the article**) and the posterior predictive probabilities for the `24` held-out units (**via equation (7) in the article**), let us first define the required quantities.
+In order to compute the posterior mean of the regression coefficients (**via equation (6) in the article**) and the posterior predictive probabilities for the *24* held-out units (**via equation (7) in the article**), let us first define the required quantities.
 ``` r
 # Relevant parameters of the Gaussian prior
 Omega <- diag(16,p,p)
@@ -403,7 +403,7 @@ print(i)}
 NUMERICAL_means <- xi+Omega%*%t(D)%*%solve(s)%*%(eta/Norm_const)
 ```
 
-The **posterior predictive probabilities for the** `24` **held-out units**—calculated via equation (7) in the article—can be instead obtained from the code below.
+The **posterior predictive probabilities for the** *24* **held-out units**—calculated via equation (7) in the article—can be instead obtained from the code below.
 
 ``` r
 set.seed(123)
