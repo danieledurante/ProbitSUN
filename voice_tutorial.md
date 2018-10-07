@@ -588,4 +588,4 @@ ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot()+theme_bw()+ geom_
 ```
 ![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/F_predict_voice.png)
 
-Also in this case, refer to Section 3 in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565) for detailed comments on the above Figures. 
+
