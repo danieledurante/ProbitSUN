@@ -552,6 +552,7 @@ data_final_plot$description <- "Quality in posterior mean calculation via Monte 
 set.seed(123)
 ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot()+theme_bw()+ geom_jitter(width = 0.2,alpha=0.1,size=0.5)+ylab("Error for posterior means")+xlab("Sampling scheme")+theme(axis.title.x = element_text(size=10),axis.title.y = element_text(size=10),strip.text = element_text(size=12))+ylim(-3.5,3.5)+ facet_wrap( ~ description)
 ```
+![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/F_moments_voice.png)
 
 Finally, the code for **Figure 3** can be found below.
 
@@ -585,5 +586,5 @@ data_final_plot$description <- "Quality in posterior predictive probability calc
 set.seed(123)
 ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot()+theme_bw()+ geom_jitter(width = 0.1,alpha=0.1,size=1)+ylab("Error for posterior predictive probability")+xlab("Sampling scheme")+theme(axis.title.x = element_text(size=10),axis.title.y = element_text(size=10),strip.text = element_text(size=12))+ylim(-0.4,0.4)+ facet_wrap( ~ description)
 ```
-
+![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/F_predict_voice.png)
 
