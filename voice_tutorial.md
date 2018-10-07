@@ -386,12 +386,12 @@ To compute the **posterior mean of the coefficients** via equation (6) in the ar
 set.seed(123)
 
 # Normalizing constant
-Norm_const <- mvNcdf(l=rep(-Inf,n),u=gamma_post,Sig=Gamma_post,10^4)$prob
+Norm_const <- mvNcdf(l=rep(-Inf,n),u=gamma_post,Sig=Gamma_post,10^(4.5))$prob
 
 # Eta vector in equation (6)
 eta <- matrix(0,n,1)
 for (i in 1:n){
-eta[i,1] <- dnorm(gamma_post[i])*mvNcdf(l=rep(-Inf,n-1),u=gamma_post[-i]-(Gamma_post[,i])[-i]*gamma_post[i],Sig=(Gamma_post[,-i])[-i,]-(Gamma_post[,i])[-i]%*%t((Gamma_post[,i])[-i]),10^4)$prob
+eta[i,1] <- dnorm(gamma_post[i])*mvNcdf(l=rep(-Inf,n-1),u=gamma_post[-i]-(Gamma_post[,i])[-i]*gamma_post[i],Sig=(Gamma_post[,-i])[-i,]-(Gamma_post[,i])[-i]%*%t((Gamma_post[,i])[-i]),10^(4.5))$prob
 print(i)}
 
 # Posterior means without sampling from the SUN posterior
@@ -404,7 +404,7 @@ The **posterior predictive probabilities for the** `24` **held-out units**—cal
 set.seed(123)
 
 # Normalizing constant for training data
-Norm_const_obs <- mvNcdf(l=rep(-Inf,n),u=gamma_post,Sig=Gamma_post,10^4)$prob
+Norm_const_obs <- mvNcdf(l=rep(-Inf,n),u=gamma_post,Sig=Gamma_post,10^(4.5))$prob
 
 # Vector containing the posterior predictive probabilities for the 24 units
 pred_NUMERICAL <- rep(0,dim(X_new)[1])
@@ -417,7 +417,7 @@ s_new <- diag(sqrt((D_new%*%Omega%*%t(D_new)+diag(1,n+1,n+1))[cbind(1:(n+1),1:(n
 gamma_new <- solve(s_new)%*%D_new%*%xi
 Gamma_new <- solve(s_new)%*%(D_new%*%Omega%*%t(D_new)+diag(1,n+1,n+1))%*%solve(s_new)	
 
-pred_NUMERICAL[i] <- mvNcdf(l=rep(-Inf,n+1),u=gamma_new,Sig=Gamma_new,10^4)$prob/Norm_const_obs
+pred_NUMERICAL[i] <- mvNcdf(l=rep(-Inf,n+1),u=gamma_new,Sig=Gamma_new,10^(4.5))$prob/Norm_const_obs
 
 print(i)}
 ```
