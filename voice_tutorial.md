@@ -110,7 +110,7 @@ end_time <- Sys.time()
 time_SUN <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors (see Figures 2 and 3 in the paper).
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `24` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors.
 
 ``` r
 # Posterior means via Monte Carlo
