@@ -558,24 +558,24 @@ Finally, the code for **Figure 3** can be found below.
 
 ``` r
 # Unified skew-normal Sampler
-data_matrix_SUN_plot<-c(pred_SUN-pred_NUMERICAL)
-data_matrix_SUN_plot<-melt(data_matrix_SUN_plot)
-data_matrix_SUN_plot$method<-c("Unified skew-normal sampler")
+data_matrix_SUN_plot <- c(pred_SUN-pred_NUMERICAL)
+data_matrix_SUN_plot <- melt(data_matrix_SUN_plot)
+data_matrix_SUN_plot$method <- c("Unified skew-normal sampler")
 
 # Gibbs sampler
-data_matrix_GIBBS_plot<-c(pred_GIBBS-pred_NUMERICAL)
-data_matrix_GIBBS_plot<-melt(data_matrix_GIBBS_plot)
-data_matrix_GIBBS_plot$method<-c("Gibbs sampler")
+data_matrix_GIBBS_plot <- c(pred_GIBBS-pred_NUMERICAL)
+data_matrix_GIBBS_plot <- melt(data_matrix_GIBBS_plot)
+data_matrix_GIBBS_plot$method <- c("Gibbs sampler")
 
 # Hamiltonian no-turn sampler
-data_matrix_HMC_plot<-c(pred_HMC-pred_NUMERICAL)
-data_matrix_HMC_plot<-melt(data_matrix_HMC_plot)
-data_matrix_HMC_plot$method<-c("Hamiltonian no u-turn sampler")
+data_matrix_HMC_plot <- c(pred_HMC-pred_NUMERICAL)
+data_matrix_HMC_plot <- melt(data_matrix_HMC_plot)
+data_matrix_HMC_plot$method <- c("Hamiltonian no u-turn sampler")
 
 # Adaptive Metropolis-Hastings Sampler
-data_matrix_MH_plot<-c(pred_MH-pred_NUMERICAL)
-data_matrix_MH_plot<-melt(data_matrix_MH_plot)
-data_matrix_MH_plot$method<-c("Adaptive Metropolis-Hastings sampler")
+data_matrix_MH_plot <- c(pred_MH-pred_NUMERICAL)
+data_matrix_MH_plot <- melt(data_matrix_MH_plot)
+data_matrix_MH_plot$method <- c("Adaptive Metropolis-Hastings sampler")
 
 # Some graphical settings
 data_final_plot <- rbind(data_matrix_GIBBS_plot,data_matrix_SUN_plot,data_matrix_HMC_plot,data_matrix_MH_plot)
