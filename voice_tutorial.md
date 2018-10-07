@@ -351,7 +351,7 @@ save(time_MH,beta_MH,MH_means,pred_MH,file="MH_output.RData")
 ```
 Implementation of Exact Inference
 ================
-As discussed in Section 3 of the paper, besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** `24` **held-out units**.
+As discussed in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md), besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** `24` **held-out units**.
 
 To address the above goal, let us **re-start again a new** `R` **session** and **set the working directory where** `voice_data.RData` **is placed**. Once this has been done, load the file `voice_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`).
 
