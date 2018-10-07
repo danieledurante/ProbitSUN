@@ -557,7 +557,7 @@ data_final_plot$description <- "Quality in posterior mean calculation via Monte 
 set.seed(123)
 ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot()+theme_bw()+ geom_jitter(width = 0.2,alpha=0.1,size=0.5)+ylab("Error for posterior means")+xlab("Sampling scheme")+theme(axis.title.x = element_text(size=10),axis.title.y = element_text(size=10),strip.text = element_text(size=12))+ylim(-2.5,2.5)+ facet_wrap( ~ description)
 ```
-![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/Moments_genes.png)
+![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/F_moments.png)
 
 Finally, the code for **Figure 3** can be found below.
 
@@ -591,6 +591,6 @@ data_final_plot$description <- "Quality in posterior predictive probability calc
 set.seed(123)
 ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot()+theme_bw()+ geom_jitter(width = 0.1,alpha=0.1,size=1)+ylab("Error for posterior predictive probability")+xlab("Sampling scheme")+theme(axis.title.x = element_text(size=10),axis.title.y = element_text(size=10),strip.text = element_text(size=12))+ylim(-0.4,0.4)+ facet_wrap( ~ description)
 ```
-![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/Predict_genes.png)
+![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/F_predict.png)
 
 Also in this case, refer to Section 3 in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565) for detailed comments on the above Figures. 
