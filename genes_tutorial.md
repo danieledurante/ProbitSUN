@@ -528,38 +528,35 @@ Refer to Section 3 in [Durante (2018). *Conjugate Bayes for probit regression vi
 To obtain **Figure 2**, consider instead the code below.
 
 ``` r
-# Unified skew-normal Sampler
-data_matrix_SUN_plot <- c(SUN_means)
+# Unified skew-normal sampler
+data_matrix_SUN_plot <- c(SUN_means-NUMERICAL_means)
 data_matrix_SUN_plot <- melt(data_matrix_SUN_plot)
-data_matrix_SUN_plot$x <- c(NUMERICAL_means)
-data_matrix_SUN_plot$method <- c("Unified skew-normal Sampler")
+data_matrix_SUN_plot$method <- c("Unified skew-normal sampler")
 
 # Gibbs sampler
-data_matrix_GIBBS_plot <- c(GIBBS_means)
+data_matrix_GIBBS_plot <- c(GIBBS_means-NUMERICAL_means)
 data_matrix_GIBBS_plot <- melt(data_matrix_GIBBS_plot)
-data_matrix_GIBBS_plot$x <- c(NUMERICAL_means)
-data_matrix_GIBBS_plot$method <- c("Gibbs Sampler")
+data_matrix_GIBBS_plot$method <- c("Gibbs sampler")
 
-# Hamiltonian no-turn sampler
-data_matrix_HMC_plot <- c(HMC_means)
+# Hamiltonian no u-turn sampler
+data_matrix_HMC_plot <- c(HMC_means-NUMERICAL_means)
 data_matrix_HMC_plot <- melt(data_matrix_HMC_plot)
-data_matrix_HMC_plot$x <- c(NUMERICAL_means)
-data_matrix_HMC_plot$method <- c("Hamiltonian no u-turn Sampler")
+data_matrix_HMC_plot$method <- c("Hamiltonian no u-turn sampler")
 
-# Adaptive Metropolis-Hastings Sampler
-data_matrix_MH_plot <- c(MH_means)
+# Adaptive Metropolis-Hastings sampler
+data_matrix_MH_plot <- c(MH_means-NUMERICAL_means)
 data_matrix_MH_plot <- melt(data_matrix_MH_plot)
-data_matrix_MH_plot$x <- c(NUMERICAL_means)
-data_matrix_MH_plot$method <- c("Adaptive Metropolis-Hastings Sampler")
+data_matrix_MH_plot$method <- c("Adaptive Metropolis-Hastings sampler")
 
 # Some graphical settings
 data_final_plot <- rbind(data_matrix_GIBBS_plot,data_matrix_SUN_plot,data_matrix_HMC_plot,data_matrix_MH_plot)
-data_final_plot$method <- factor(data_final_plot$method,levels=c("Unified skew-normal Sampler","Gibbs Sampler","Hamiltonian no u-turn Sampler","Adaptive Metropolis-Hastings Sampler"))
+data_final_plot$method <- factor(data_final_plot$method,levels=c("Unified skew-normal sampler","Gibbs sampler","Hamiltonian no u-turn sampler","Adaptive Metropolis-Hastings sampler"))
+data_final_plot$description <- "Quality in posterior mean calculation via Monte Carlo methods"
 
 # Figure 2
-ggplot(data_final_plot, aes(x, value))+geom_point(size=1.5,alpha=0.15)+ facet_wrap( ~ method,ncol=4)+xlab("Posterior Means via Exact Expression")+ylab("Posterior Means via Simulation")+scale_color_manual(values=brewer.pal(9, "Greys")[c(6)])+labs(col="Method")+theme_bw()+theme(legend.position="none")+geom_abline(intercept=0, slope=1,alpha=0.1)+theme(axis.title.x = element_text(size=9),axis.title.y = element_text(size=9))
+ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot()+theme_bw()+ geom_jitter(width = 0.2,alpha=0.1,size=0.5)+ylab("Error for posterior means")+xlab("Sampling scheme")+theme(axis.title.x = element_text(size=10),axis.title.y = element_text(size=10),strip.text = element_text(size=12))+ylim(-2.5,2.5)+ facet_wrap( ~ description)
 
-ggsave("Moments_genes.png", width=10,height=3)
+ggsave("Moments_genes.png", width=9,height=3.5)
 ```
 ![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/Moments_genes.png)
 
@@ -567,41 +564,34 @@ Finally, the code for **Figure 3** can be found below.
 
 ``` r
 # Unified skew-normal Sampler
-data_matrix_SUN_plot <- pred_SUN
-data_matrix_SUN_plot <- melt(data_matrix_SUN_plot)
-data_matrix_SUN_plot$y <- y_new
-data_matrix_SUN_plot$x <- c(pred_NUMERICAL)
-data_matrix_SUN_plot$method <- c("Unified skew-normal Sampler")
+data_matrix_SUN_plot<-c(pred_SUN-pred_NUMERICAL)
+data_matrix_SUN_plot<-melt(data_matrix_SUN_plot)
+data_matrix_SUN_plot$method<-c("Unified skew-normal sampler")
 
 # Gibbs sampler
-data_matrix_GIBBS_plot <- pred_GIBBS
-data_matrix_GIBBS_plot <- melt(data_matrix_GIBBS_plot)
-data_matrix_GIBBS_plot$y <- y_new
-data_matrix_GIBBS_plot$x <- c(pred_NUMERICAL)
-data_matrix_GIBBS_plot$method <- c("Gibbs Sampler")
+data_matrix_GIBBS_plot<-c(pred_GIBBS-pred_NUMERICAL)
+data_matrix_GIBBS_plot<-melt(data_matrix_GIBBS_plot)
+data_matrix_GIBBS_plot$method<-c("Gibbs sampler")
 
 # Hamiltonian no-turn sampler
-data_matrix_HMC_plot <- pred_HMC
-data_matrix_HMC_plot <- melt(data_matrix_HMC_plot)
-data_matrix_HMC_plot$y <- y_new
-data_matrix_HMC_plot$x <- c(pred_NUMERICAL)
-data_matrix_HMC_plot$method <- c("Hamiltonian no u-turn Sampler")
+data_matrix_HMC_plot<-c(pred_HMC-pred_NUMERICAL)
+data_matrix_HMC_plot<-melt(data_matrix_HMC_plot)
+data_matrix_HMC_plot$method<-c("Hamiltonian no u-turn sampler")
 
 # Adaptive Metropolis-Hastings Sampler
-data_matrix_MH_plot <- pred_MH
-data_matrix_MH_plot <- melt(data_matrix_MH_plot)
-data_matrix_MH_plot$y <- y_new
-data_matrix_MH_plot$x <- c(pred_NUMERICAL)
-data_matrix_MH_plot$method <- c("Adaptive Metropolis-Hastings Sampler")
+data_matrix_MH_plot<-c(pred_MH-pred_NUMERICAL)
+data_matrix_MH_plot<-melt(data_matrix_MH_plot)
+data_matrix_MH_plot$method<-c("Adaptive Metropolis-Hastings sampler")
 
 # Some graphical settings
 data_final_plot <- rbind(data_matrix_GIBBS_plot,data_matrix_SUN_plot,data_matrix_HMC_plot,data_matrix_MH_plot)
-data_final_plot$method <- factor(data_final_plot$method,levels=c("Unified skew-normal Sampler","Gibbs Sampler","Hamiltonian no u-turn Sampler","Adaptive Metropolis-Hastings Sampler"))
+data_final_plot$method <- factor(data_final_plot$method,levels=c("Unified skew-normal sampler","Gibbs sampler","Hamiltonian no u-turn sampler","Adaptive Metropolis-Hastings sampler"))
+data_final_plot$description <- "Quality in posterior predictive probability calculation via Monte Carlo methods"
 
 # Figure 3
-ggplot(data_final_plot, aes(x, value,color=factor(y)))+geom_point(size=1.5,alpha=0.8)+ facet_wrap( ~ method,ncol=4)+xlab("Posterior Predictive Probabilities via Exact Expression")+ylab("Posterior Predictive Probabilities via Simulation")+scale_color_manual(values=brewer.pal(9, "Greys")[c(6,4)])+labs(col="Method")+theme_bw()+theme(legend.position="none")+geom_abline(intercept=0, slope=1,alpha=0.1)+theme(axis.title.x = element_text(size=9),axis.title.y = element_text(size=9))+xlim(0,1)+ylim(0,1)
+ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot()+theme_bw()+ geom_jitter(width = 0.1,alpha=0.1,size=1)+ylab("Error for posterior predictive probability")+xlab("Sampling scheme")+theme(axis.title.x = element_text(size=10),axis.title.y = element_text(size=10),strip.text = element_text(size=12))+ylim(-0.4,0.4)+ facet_wrap( ~ description)
 
-ggsave("Predict_genes.png", width=10,height=3)
+ggsave("Predict_genes.png", width=9,height=3.5)
 ```
 ![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/Predict_genes.png)
 
