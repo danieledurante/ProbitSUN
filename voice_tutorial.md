@@ -7,7 +7,7 @@ Below, you will find details on how to **download and clean the data**, `R` **co
 
 Upload and Clean the Voice Rehabilitation Dataset
 ================
-The focus, here, is on learning how `p - 1 = 309` dysphonia measures relate to the probability of an acceptable phonation. Data are available for `n = 126` measurements and can be downloaded at the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/LSVT+Voice+Rehabilitation) by clicking at this [link](https://archive.ics.uci.edu/ml/machine-learning-databases/00282/). For more information on this study, refer to [Tsanas et al. (2014)](https://ieeexplore.ieee.org/document/6678640).
+The focus, here, is on learning how *p - 1 = 309* dysphonia measures relate to the probability of an acceptable phonation. Data are available for *n = 126* measurements and can be downloaded at the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/LSVT+Voice+Rehabilitation) by clicking at this [link](https://archive.ics.uci.edu/ml/machine-learning-databases/00282/). For more information on this study, refer to [Tsanas et al. (2014)](https://ieeexplore.ieee.org/document/6678640).
  
 The download provides a directory `LSVT_voice_rehabilitation` which contains a description in the text file `LSVT_feature_names.txt` and the dataset of interest `LSVT_voice_rehabilitation.xlsx`. To **clean this dataset**, first set the working directory where `LSVT_voice_rehabilitation.xlsx` is placed. Once this has been done, **clean the workspace**, **call useful** `R` **packages**  and **load the predictors matrix along with the response vector**. Following [Gelman et al. (2008)](https://projecteuclid.org/euclid.aoas/1231424214), **the predictors are also rescaled and an intercept term is added**.
 
@@ -25,7 +25,7 @@ X_data <- cbind(rep(1,dim(X_data)[1]),X_data)
 y_data <- c(read.xls("LSVT_voice_rehabilitation.xlsx",sheet=2,header=TRUE)[,1])-1
 ```
 
-In this application, **posterior inference** relies on `100` randomly chosen observations, whereas the remaining `26` are held-out to assess performance also in **out-of-sample classification via the posterior predictive distribution**. Let us, therefore, create these training and test sets.
+In this application, **posterior inference** relies on *100* randomly chosen observations, whereas the remaining *26* are held-out to assess performance also in **out-of-sample classification via the posterior predictive distribution**. Let us, therefore, create these training and test sets.
 
 ``` r
 set.seed(1)
@@ -110,7 +110,7 @@ end_time <- Sys.time()
 time_SUN <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `26` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** *26* **held-out units**. Such quantities are obtained here via Monte Carlo integration using the samples from the posterior, and will be used in the comparisons with state-of-the-art competitors.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -174,7 +174,7 @@ beta_GIBBS <- t(GIBBS_Samples$betadraw[(burn+1):N_sampl,])
 time_GIBBS <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `26` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** *26* **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the data augmentation Gibbs sampler.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -244,7 +244,7 @@ beta_HMC <- t(extract(HMC_Samples)$beta)
 time_HMC <- get_elapsed_time(HMC_Samples)[1] + get_elapsed_time(HMC_Samples)[2]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `26` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** *26* **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the Hamiltonian no u-turn sampler.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -331,7 +331,7 @@ beta_MH <- t(MH_Samples$Posterior1[(burn+1):N_sampl,])
 time_MH <- difftime(end_time, start_time, units=("secs"))[[1]]
 ```
 
-Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** `26` **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
+Let us now **calculate the posterior mean of the regression coefficients and the posterior predictive probabilities for the** *26* **held-out units**. Such quantities are obtained here via Monte Carlo integration using the MCMC samples from the adaptive Metropolis-Hastings.
 
 ``` r
 # Posterior means via Monte Carlo
@@ -351,7 +351,7 @@ save(time_MH,beta_MH,MH_means,pred_MH,file="MH_output.RData")
 ```
 Implementation of Exact Inference
 ================
-As discussed in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md), besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** `26` **held-out units**.
+As discussed in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md), besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** *26* **held-out units**.
 
 To address the above goal, let us **re-start again a new** `R` **session** and **set the working directory where** `voice_data.RData` **is placed**. Once this has been done, load the file `voice_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`).
 
@@ -398,7 +398,7 @@ print(i)}
 NUMERICAL_means <- xi+Omega%*%t(D)%*%solve(s)%*%(eta/Norm_const)
 ```
 
-The **posterior predictive probabilities for the** `26` **held-out units**—calculated via equation (7) in the article—can be instead obtained from the code below.
+The **posterior predictive probabilities for the** *26* **held-out units**—calculated via equation (7) in the article—can be instead obtained from the code below.
 
 ``` r
 set.seed(123)
@@ -518,7 +518,7 @@ kable(Table_perf)
 |Hamiltonian no-turn sampler          |              13.27305| 17262.55103| 20000.00000| 20000.00000|
 |Adapt.   Metropolis-Hastings Sampler |              60.78727|    36.03749|    63.79433|    74.95692|
 
-As expected, increasing the sample size `n` leads to an evident increment in running-time for the **i.i.d. sampler from the unified skew-normal posterior**, thus reducing the iterations per seconds. To clarify such a claim, compare this result with the one in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). The **Gibbs sampler** and the **adaptive Metropolis-Hastings algorithm** have instead an improvement in computational time compared to the results in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). This is mainly due to a reduction in `p`. Finally, the **Hamiltonian no-turn sampler** performs as in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). To conclude this discussion, note that, although experiencing an evident increment in running-time, the **i.i.d. sampler from the unified skew-normal posterior remains still the most efficient algorithm also in this case-study.** In fact, it guarantees the highest number of effective sample sizes per second.
+As expected, increasing the sample size *n* leads to an evident increment in running-time for the **i.i.d. sampler from the unified skew-normal posterior**, thus reducing the iterations per seconds. To clarify such a claim, compare this result with the one in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). The **Gibbs sampler** and the **adaptive Metropolis-Hastings algorithm** have instead an improvement in computational time compared to the results in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). This is mainly due to a reduction in *p*. Finally, the **Hamiltonian no-turn sampler** performs as in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). To conclude this discussion, note that, although experiencing an evident increment in running-time, the **i.i.d. sampler from the unified skew-normal posterior remains still the most efficient algorithm also in this case-study.** In fact, it guarantees the highest number of effective sample sizes per second.
 
 To obtain **Figure 2**, consider instead the code below.
 
