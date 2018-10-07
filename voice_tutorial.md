@@ -21,7 +21,7 @@ audio_measures <- as.matrix(read.xls("LSVT_voice_rehabilitation.xlsx",sheet=1,he
 X_data <- apply(audio_measures,2,rescale)
 X_data <- cbind(rep(1,dim(X_data)[1]),X_data) 
 
-# Response
+# Response (originally is coded on a 1-2 scale. subtract 1 to have a 0-1 scale)
 y_data <- c(read.xls("LSVT_voice_rehabilitation.xlsx",sheet=2,header=TRUE)[,1])-1
 ```
 
