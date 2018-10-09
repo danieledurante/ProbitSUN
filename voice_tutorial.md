@@ -462,8 +462,8 @@ N_sampl_SUN <- 20000
 N_sampl <- 25000
 
 Table_perf <- matrix(0,4,4)
-rownames(Table_perf) <- c("Unified skew-normal Sampler", "Gibbs sampler", "Hamiltonian no-turn sampler", "Adaptive Metropolis-Hastings Sampler")
-colnames(Table_perf) <- c("Iterations per second", "Min ESS", "Q1 ESS", "Median ESS")
+rownames(Table_perf) <- c("Unified skew-normal sampler", "Gibbs sampler", "Hamiltonian no-turn sampler", "Adapt. Metropolis-Hastings")
+colnames(Table_perf) <- c("Samples of beta per sec.", "Min ESS", "Q1 ESS", "Median ESS")
 ```
 **Note** that the three MCMC methods produce `N_sampl <- 25000` samples—since a burn-in of 5000 is required—whereas `Algorithm 1` draws directly i.i.d. from the unified skew-normal posterior, and hence, only `N_sampl_SUN <- 20000` samples are required. Let us now calculate the key quantities in **Table 1** and display it.
 ``` r
@@ -511,12 +511,12 @@ Table_perf[4,1] <- N_sampl/time_MH
 
 kable(Table_perf)
 ```
-|                                     | Iterations per sec.  |     Min ESS|      Q1 ESS|  Median ESS|
-|:------------------------------------|---------------------:|-----------:|-----------:|-----------:|
-|Unified skew-normal Sampler          |              51.52913| 20000.00000| 20000.00000| 20000.00000|
-|Gibbs sampler                        |              62.32998|    42.92763|   553.44713|  4010.19037|
-|Hamiltonian no-turn sampler          |              13.27305| 17262.55103| 20000.00000| 20000.00000|
-|Adapt.   Metropolis-Hastings Sampler |              60.78727|    36.03749|    63.79433|    74.95692|
+|                                     | Samples of beta per sec.  |     Min ESS|      Q1 ESS|  Median ESS|
+|:------------------------------------|--------------------------:|-----------:|-----------:|-----------:|
+|Unified skew-normal sampler          |                   51.52913| 20000.00000| 20000.00000| 20000.00000|
+|Gibbs sampler                        |                   62.32998|    42.92763|   553.44713|  4010.19037|
+|Hamiltonian no-turn sampler          |                   13.27305| 17262.55103| 20000.00000| 20000.00000|
+|Adapt. Metropolis-Hastings           |                   60.78727|    36.03749|    63.79433|    74.95692|
 
 As expected, increasing the sample size *n* leads to an evident increment in running-time for the **i.i.d. sampler from the unified skew-normal posterior**, thus reducing the iterations per seconds. To clarify such a claim, compare this result with the one in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). The **Gibbs sampler** and the **adaptive Metropolis-Hastings algorithm** have instead an improvement in computational time compared to the results in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). This is mainly due to a reduction in *p*. Finally, the **Hamiltonian no-turn sampler** performs as in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). To conclude this discussion, note that, although experiencing an evident increment in running-time, the **i.i.d. sampler from the unified skew-normal posterior remains still the most efficient algorithm also in this case-study.** In fact, it guarantees the highest number of effective sample sizes per second.
 
