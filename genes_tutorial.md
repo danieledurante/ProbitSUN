@@ -467,8 +467,8 @@ N_sampl_SUN <- 20000
 N_sampl <- 25000
 
 Table_perf <- matrix(0,4,4)
-rownames(Table_perf) <- c("Unified skew-normal Sampler", "Gibbs sampler", "Hamiltonian no-turn sampler", "Adaptive Metropolis-Hastings Sampler")
-colnames(Table_perf) <- c("Iterations per second", "Min ESS", "Q1 ESS", "Median ESS")
+rownames(Table_perf) <- c("Unified skew-normal sampler", "Gibbs sampler", "Hamiltonian no-turn sampler", "Adapt. Metropolis-Hastings sampler")
+colnames(Table_perf) <- c("Samples of beta per sec.", "Min ESS", "Q1 ESS", "Median ESS")
 ```
 **Note** that the three MCMC methods produce `N_sampl <- 25000` samples—since a burn-in of 5000 is required—whereas `Algorithm 1` draws directly i.i.d. from the unified skew-normal posterior, and hence, only `N_sampl_SUN <- 20000` samples are required. Let us now calculate the key quantities in **Table 1** and display it.
 ``` r
@@ -516,12 +516,12 @@ Table_perf[4,1] <- N_sampl/time_MH
 
 kable(Table_perf)
 ```
-|                                     | Iterations per sec.  |     Min ESS|     Q1 ESS|  Median ESS|
-|:------------------------------------|---------------------:|-----------:|----------:|-----------:|
-|Unified skew-normal Sampler          |             886.64268| 20000.00000| 20000.0000| 20000.00000|
-|Gibbs sampler                        |              13.47774|    55.46406|  2417.3770|  3687.17645|
-|Hamiltonian no-turn sampler          |              15.95125| 20000.00000| 20000.0000| 20000.00000|
-|Adap.    Metropolis-Hastings Sampler |              19.33543|    28.55497|    49.2213|    59.07417|
+|                                     | Samples of beta per sec.  |     Min ESS|     Q1 ESS|  Median ESS|
+|:------------------------------------|--------------------------:|-----------:|----------:|-----------:|
+|Unified skew-normal sampler          |                  886.64268| 20000.00000| 20000.0000| 20000.00000|
+|Gibbs sampler                        |                   13.47774|    55.46406|  2417.3770|  3687.17645|
+|Hamiltonian no-turn sampler          |                   15.95125| 20000.00000| 20000.0000| 20000.00000|
+|Adap. Metropolis-Hastings sampler    |                   19.33543|    28.55497|    49.2213|    59.07417|
 
 Refer to Section 3 in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565) for detailed comments on the above results. 
 
