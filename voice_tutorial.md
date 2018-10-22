@@ -406,7 +406,7 @@ set.seed(123)
 # Normalizing constant for training data
 Norm_const_obs <- mvNcdf(l=rep(-Inf,n),u=gamma_post,Sig=Gamma_post,10^(4.5))$prob
 
-# Vector containing the posterior predictive probabilities for the 24 units
+# Vector containing the posterior predictive probabilities for the 26 units
 pred_NUMERICAL <- rep(0,dim(X_new)[1])
 
 # Calculate these posterior predictive probabilities as in (7) without sampling from the SUN posterior
