@@ -283,7 +283,7 @@ p <- dim(X)[2]
 N_sampl <- 25000
 burn <- 5000
 ```
-As already discussed in the [`README.md`](https://github.com/danieledurante/ProbitSUN/blob/master/README.md) file, this routine is also carefully initialized via expectation propagation estimates for the location and scale of the posterior. Such quantities can be obtained via the `R` package `EPGLM`. Let us calculate them.
+As already discussed in the [`README.md`](https://github.com/danieledurante/ProbitSUN/blob/master/README.md) file, this routine is also carefully initialized via expectation-propagation estimates for the location and scale of the posterior. Such quantities can be obtained via the `R` package `EPGLM`. Let us calculate them.
 ``` r
 set.seed(123)
 EPgene <- EPprobit(X = X, Y = y, s = 16)
