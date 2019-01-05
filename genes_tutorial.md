@@ -555,7 +555,7 @@ data_final_plot$description <- "Quality in posterior mean calculation via Monte 
 
 # Figure 2
 set.seed(123)
-ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot()+theme_bw()+ geom_jitter(width = 0.2,alpha=0.1,size=0.5)+ylab("Error for posterior means")+xlab("Sampling scheme")+theme(axis.title.x = element_text(size=10),axis.title.y = element_text(size=10),strip.text = element_text(size=12))+ylim(-2.5,2.5)+ facet_wrap( ~ description)
+ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot(color="#838383",fill="#e5e5e5",lwd=0.6)+theme_bw()+ geom_jitter(width = 0.2,shape=16,size=0.4)+ylab("Error for posterior means")+xlab("Sampling scheme")+theme(axis.title.x = element_text(size=10),axis.title.y = element_text(size=10),strip.text = element_text(size=12))+ylim(-2.5,2.5)
 ```
 ![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/F_moments_genes.png)
 
@@ -589,7 +589,7 @@ data_final_plot$description <- "Quality in posterior predictive probability calc
 
 # Figure 3
 set.seed(123)
-ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot()+theme_bw()+ geom_jitter(width = 0.1,alpha=0.1,size=1)+ylab("Error for posterior predictive probability")+xlab("Sampling scheme")+theme(axis.title.x = element_text(size=10),axis.title.y = element_text(size=10),strip.text = element_text(size=12))+ylim(-0.4,0.4)+ facet_wrap( ~ description)
+ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot(color="#838383",fill="#e5e5e5",lwd=0.6)+theme_bw()+ geom_jitter(width = 0.2,shape=16,size=0.8)+ylab("Error for posterior predictive probability")+xlab("Sampling scheme")+theme(axis.title.x = element_text(size=10),axis.title.y = element_text(size=10),strip.text = element_text(size=12))+ylim(-0.4,0.4)
 ```
 ![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/F_predict_genes.png)
 
