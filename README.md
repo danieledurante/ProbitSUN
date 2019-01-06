@@ -12,4 +12,4 @@ This repository provides **codes and tutorials to implement the inference method
 
 In [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md) and [`voice_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/voice_tutorial.md), the inference performance based on sampling from the posterior is also compared with the **exact methods** proposed in Section 2.3.
 
-All the analyses are performed with a **MacBook Pro (OS X El Capitan, version 10.11.6)**, using a `R` version 3.5.2. 
+All the analyses are performed with a **MacBook Pro (OS X El Capitan, version 10.11.6)**, using a `R` version 3.4.1. 
