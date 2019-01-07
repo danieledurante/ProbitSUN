@@ -493,7 +493,7 @@ Table_perf[2,1] <- N_sampl/time_GIBBS
 #----------------
 
 # Summaries for the effective sample sizes (ESS)
-Table_perf[3,c(2:4)] <- summary((summary(HMC_Samples)$summary)[1:dim(X)[2],9])[1:3]
+Table_perf[3,c(2:4)] <- summary(apply(extract(HMC_Samples)$beta,2,effectiveSize))[1:3]
 
 # Iterations per second
 Table_perf[3,1] <- N_sampl/time_HMC
