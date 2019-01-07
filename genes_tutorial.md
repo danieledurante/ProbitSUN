@@ -520,7 +520,7 @@ kable(Table_perf)
 |:------------------------------------|--------------------------:|-----------:|----------:|-----------:|
 |Unified skew-normal sampler          |                  886.64268| 20000.00000| 20000.0000| 20000.00000|
 |Gibbs sampler                        |                   13.47774|    55.46406|  2417.3770|  3687.17645|
-|Hamiltonian no-turn sampler          |                   15.95125| 20000.00000| 20000.0000| 20000.00000|
+|Hamiltonian no-turn sampler          |                   15.95125| 17730.53536| 20000.0000| 20000.00000|
 |Adapt. Metropolis-Hastings           |                   19.33543|    28.55497|    49.2213|    59.07417|
 
 Refer to Section 3 in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565) for detailed comments on the above results. **Note** that the `Samples of beta per sec.` may vary depending on computer power, but this will not affect the final conclusions (i.e. the substantial improvement in sampling speed of `Unified skew-normal sampler`).
