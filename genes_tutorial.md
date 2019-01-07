@@ -477,7 +477,7 @@ colnames(Table_perf) <- c("Samples of beta per sec.", "Min ESS", "Q1 ESS", "Medi
 #----------------
 
 # Summaries for the effective sample sizes (ESS)
-# (Being and independent sampler it has always ESS = N_sampl_SUN)
+# (Being an independent sampler it has always ESS = N_sampl_SUN)
 Table_perf[1,c(2:4)] <- N_sampl_SUN
 
 # Iterations per second
