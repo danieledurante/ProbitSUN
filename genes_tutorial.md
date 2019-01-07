@@ -473,7 +473,7 @@ colnames(Table_perf) <- c("Samples of beta per sec.", "Min ESS", "Q1 ESS", "Medi
 **Note** that the three MCMC methods produce `N_sampl <- 25000` samples—since a burn-in of 5000 is required—whereas `Algorithm 1` draws directly i.i.d. from the unified skew-normal posterior, and hence, only `N_sampl_SUN <- 20000` samples are required. Let us now calculate the key quantities in **Table 1** and display it.
 ``` r
 #----------------
-# Unified skew-normal Sampler
+# Unified skew-normal sampler
 #----------------
 
 # Summaries for the effective sample sizes (ESS)
@@ -504,7 +504,7 @@ Table_perf[3,c(2:4)] <- summary(apply(extract(HMC_Samples)$beta,2,effectiveSize)
 Table_perf[3,1] <- N_sampl/time_HMC
 
 #----------------
-# Adaptive Metropolis-Hastings Sampler
+# Adaptive Metropolis-Hastings sampler
 #----------------
 
 # Summaries for the effective sample sizes (ESS)
