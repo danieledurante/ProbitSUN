@@ -460,7 +460,7 @@ load("MH_output.RData")
 load("NUMERICAL_output.RData")
 ```
 
-To **create Table 1**, create an empty matrix `Table_perf` and set the total number of samples provided by the algorithms implemented above. 
+To **create Table 1**, define an empty matrix `Table_perf` and set the total number of samples provided by the algorithms implemented above. 
 
 ``` r
 N_sampl_SUN <- 20000
