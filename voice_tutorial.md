@@ -468,11 +468,11 @@ colnames(Table_perf) <- c("Samples of beta per sec.", "Min ESS", "Q1 ESS", "Medi
 **Note** that the three MCMC methods produce `N_sampl <- 25000` samples—since a burn-in of 5000 is required—whereas `Algorithm 1` draws directly i.i.d. from the unified skew-normal posterior, and hence, only `N_sampl_SUN <- 20000` samples are required. Let us now calculate the key quantities in **Table 1** and display it.
 ``` r
 #----------------
-# Unified skew-normal Sampler
+# Unified skew-normal sampler
 #----------------
 
 # Summaries for the effective sample sizes (ESS)
-# (Being and independent sampler it has always ESS = N_sampl_SUN)
+# (Being an independent sampler it has always ESS = N_sampl_SUN)
 Table_perf[1,c(2:4)] <- N_sampl_SUN
 
 # Iterations per second
@@ -499,7 +499,7 @@ Table_perf[3,c(2:4)] <- summary(apply(extract(HMC_Samples)$beta,2,effectiveSize)
 Table_perf[3,1] <- N_sampl/time_HMC
 
 #----------------
-# Adaptive Metropolis-Hastings Sampler
+# Adaptive Metropolis-Hastings sampler
 #----------------
 
 # Summaries for the effective sample sizes (ESS)
@@ -558,7 +558,7 @@ ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot(color="#838383",fil
 Finally, the code for **Figure 3** can be found below.
 
 ``` r
-# Unified skew-normal Sampler
+# Unified skew-normal sampler
 data_matrix_SUN_plot <- c(pred_SUN-pred_NUMERICAL)
 data_matrix_SUN_plot <- melt(data_matrix_SUN_plot)
 data_matrix_SUN_plot$method <- c("Unified skew-normal sampler")
@@ -573,7 +573,7 @@ data_matrix_HMC_plot <- c(pred_HMC-pred_NUMERICAL)
 data_matrix_HMC_plot <- melt(data_matrix_HMC_plot)
 data_matrix_HMC_plot$method <- c("Hamiltonian no u-turn sampler")
 
-# Adaptive Metropolis-Hastings Sampler
+# Adaptive Metropolis-Hastings sampler
 data_matrix_MH_plot <- c(pred_MH-pred_NUMERICAL)
 data_matrix_MH_plot <- melt(data_matrix_MH_plot)
 data_matrix_MH_plot$method <- c("Adaptive Metropolis-Hastings sampler")
