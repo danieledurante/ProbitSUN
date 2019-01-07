@@ -562,7 +562,7 @@ ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot(color="#838383",fil
 Finally, the code for **Figure 3** can be found below.
 
 ``` r
-# Unified skew-normal Sampler
+# Unified skew-normal sampler
 data_matrix_SUN_plot <- c(pred_SUN-pred_NUMERICAL)
 data_matrix_SUN_plot <- melt(data_matrix_SUN_plot)
 data_matrix_SUN_plot$method <- c("Unified skew-normal sampler")
@@ -577,7 +577,7 @@ data_matrix_HMC_plot <- c(pred_HMC-pred_NUMERICAL)
 data_matrix_HMC_plot <- melt(data_matrix_HMC_plot)
 data_matrix_HMC_plot$method <- c("Hamiltonian no u-turn sampler")
 
-# Adaptive Metropolis-Hastings Sampler
+# Adaptive Metropolis-Hastings sampler
 data_matrix_MH_plot <- c(pred_MH-pred_NUMERICAL)
 data_matrix_MH_plot <- melt(data_matrix_MH_plot)
 data_matrix_MH_plot$method <- c("Adaptive Metropolis-Hastings sampler")
