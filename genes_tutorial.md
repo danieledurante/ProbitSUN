@@ -434,7 +434,7 @@ Performance Assessments
 ================
 This section concludes the analysis by providing **codes to produce Table 1 along with Figures 2 and 3** in Section 3 of the paper [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). More specifically, **Table 1** compares the computational performance of the sampling schemes implemented above, whereas **Figures 2 and 3** assess to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565)—with a focus on posterior means and posterior predictive probabilities.
 
-Before providing the codes to reproduce Table 1 along with Figures 2 and 3, **re-start again a new** `R` **session** and **set the working directory where** `gene_data.RData`, `SUN_output.RData`, `GIBBS_output.RData`, `HMC_output.RData`, `MH_output.RData` and `NUMERICAL_output.RData` **are placed**. Once this has been done, load these data files along with useful `R` packages.
+Before providing the codes to produce Table 1 along with Figures 2 and 3, **re-start again a new** `R` **session** and **set the working directory where** `gene_data.RData`, `SUN_output.RData`, `GIBBS_output.RData`, `HMC_output.RData`, `MH_output.RData` and `NUMERICAL_output.RData` **are placed**. Once this has been done, load these data files along with useful `R` packages.
 
 ``` r
 rm(list=ls())
