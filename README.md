@@ -1,6 +1,6 @@
 # Conjugate Bayes for Probit Regression via Unified Skew-Normal Random Variables
 
-This repository is associated with the article [Durante (2018). *Conjugate Bayes for Probit Regression via Unified Skew-Normals*](https://arxiv.org/abs/1802.09565). The **key contribution of this paper is outlined below**.
+This repository is associated with the article [Durante (2019). *Conjugate Bayes for Probit Regression via Unified Skew-Normal Distributions*](https://arxiv.org/abs/1802.09565). The **key contribution of this paper is outlined below**.
 
 > When the focus is on Bayesian probit regression with Gaussian priors for the coefficients, the posterior is available and belongs to the class of unified skew-normal random variables. The same is true more generally when the prior is, itself, a  unified skew-normal.
 
