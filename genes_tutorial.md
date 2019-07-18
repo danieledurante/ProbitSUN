@@ -57,7 +57,7 @@ This section contains codes to implement the algorithm which provides **i.i.d. s
 
 Direct sampling from the unified skew-normal posterior
 ------------------
-This subsection implements the **i.i.d. sampler from the unified skew-normal posterior** which relies on the novel results in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). This scheme is described in detail in Section 2.4 of the paper. A pseudo-code is also provided in `Algorithm 1`. 
+This subsection implements the **i.i.d. sampler from the unified skew-normal posterior** which relies on the novel results in [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565). This scheme is described in detail in Section 2.4 of the paper. A pseudo-code is also provided in `Algorithm 1`. 
 
 To implement this routine, **let us re-start a new** `R` **session** and **set the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of i.i.d. samples.
 
@@ -76,7 +76,7 @@ p <- dim(X)[2]
 # Number of i.i.d. samples from the posterior
 N_sampl <- 20000
 ```
-Once the above steps have been done, let us first **define the key quantities to implement** `Algorithm 1` in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565).
+Once the above steps have been done, let us first **define the key quantities to implement** `Algorithm 1` in [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565).
 
 ``` r
 # Relevant parameters of the Gaussian prior
@@ -356,7 +356,7 @@ save(time_MH,beta_MH,MH_means,pred_MH,file="MH_output.RData")
 ```
 Implementation of Exact Inference
 ================
-As discussed in Section 3 of the paper, besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** *24* **held-out units**.
+As discussed in Section 3 of the paper, besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** *24* **held-out units**.
 
 To address the above goal, let us **re-start again a new** `R` **session** and **set the working directory where** `gene_data.RData` **is placed**. Once this has been done, load the file `gene_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`).
 
@@ -432,7 +432,7 @@ save(NUMERICAL_means,pred_NUMERICAL,file="NUMERICAL_output.RData")
 ```
 Performance Assessments
 ================
-This section concludes the analysis by providing **codes to produce Table 1 along with Figures 2 and 3** in Section 3 of the paper [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). More specifically, **Table 1** compares the computational performance of the sampling schemes implemented above, whereas **Figures 2 and 3** assess to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565)—with a focus on posterior means and posterior predictive probabilities.
+This section concludes the analysis by providing **codes to produce Table 1 along with Figures 2 and 3** in Section 3 of the paper [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565). More specifically, **Table 1** compares the computational performance of the sampling schemes implemented above, whereas **Figures 2 and 3** assess to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions presented in Section 2.3 of [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565)—with a focus on posterior means and posterior predictive probabilities.
 
 Before providing the codes to produce Table 1 along with Figures 2 and 3, **re-start again a new** `R` **session** and **set the working directory where** `gene_data.RData`, `SUN_output.RData`, `GIBBS_output.RData`, `HMC_output.RData`, `MH_output.RData` and `NUMERICAL_output.RData` **are placed**. Once this has been done, load these data files along with useful `R` packages.
 
@@ -523,7 +523,7 @@ kable(Table_perf)
 |Hamiltonian no-turn sampler          |                   15.95125| 17730.53536| 20000.0000| 20000.00000|
 |Adapt. Metropolis-Hastings           |                   19.33543|    28.55497|    49.2213|    59.07417|
 
-Refer to Section 3 in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565) for detailed comments on the above results. **Note** that the `Samples of beta per sec.` may vary depending on computer power, but this will not affect the final conclusions (i.e. the substantial improvement in sampling speed of `Unified skew-normal sampler`).
+Refer to Section 3 in [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565) for detailed comments on the above results. **Note** that the `Samples of beta per sec.` may vary depending on computer power, but this will not affect the final conclusions (i.e. the substantial improvement in sampling speed of `Unified skew-normal sampler`).
 
 To obtain **Figure 2**, consider instead the code below.
 
@@ -593,4 +593,4 @@ ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot(color="#838383",fil
 ```
 ![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/F_predict_genes.png)
 
-Also in this case, refer to Section 3 in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565) for detailed comments on the above Figures. 
+Also in this case, refer to Section 3 in [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565) for detailed comments on the above Figures. 
