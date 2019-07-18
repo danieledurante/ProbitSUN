@@ -1,7 +1,7 @@
 
 Description of the Voice Rehabilitation Application
 ================
-As described in the [`README.md`](https://github.com/danieledurante/ProbitSUN/blob/master/README.md) file, this tutorial contains general guidelines and code to perform the analyses for the [Voice Rehabilitation](https://archive.ics.uci.edu/ml/datasets/LSVT+Voice+Rehabilitation) application. Here, the goal is to provide additional insights compared to those discussed in the application in Section 3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Indeed, as mentioned in Section 2, when *p* decreases and *n* grows, the MCMC methods in `bayesm`, `rstan` and `LaplacesDemon`  are expected to progressively improve performance, whereas `Algorithm 1` may face more evident issues in computational time. This behavior is quantitatively assessed in a [Voice Rehabilitation](https://archive.ics.uci.edu/ml/datasets/LSVT+Voice+Rehabilitation) study which has almost doubled *n* and almost halved *p*, when compared to the application in the article.
+As described in the [`README.md`](https://github.com/danieledurante/ProbitSUN/blob/master/README.md) file, this tutorial contains general guidelines and code to perform the analyses for the [Voice Rehabilitation](https://archive.ics.uci.edu/ml/datasets/LSVT+Voice+Rehabilitation) application. Here, the goal is to provide additional insights compared to those discussed in the application in Section 3 of [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565). Indeed, as mentioned in Section 2, when *p* decreases and *n* grows, the MCMC methods in `bayesm`, `rstan` and `LaplacesDemon`  are expected to progressively improve performance, whereas `Algorithm 1` may face more evident issues in computational time. This behavior is quantitatively assessed in a [Voice Rehabilitation](https://archive.ics.uci.edu/ml/datasets/LSVT+Voice+Rehabilitation) study which has almost doubled *n* and almost halved *p*, when compared to the application in the article.
 
 Below, you will find details on how to **download and clean the data**, `R` **code to implement the different methods for posterior inference** and **guidelines to obtain the same tables and figures** outlined in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). For implementation purposes, **execute the code below considering the same order in which is presented**.
 
@@ -52,7 +52,7 @@ This section contains codes to implement the algorithm which provides **i.i.d. s
 
 Direct sampling from the unified skew-normal posterior
 ------------------
-This subsection implements the **i.i.d. sampler from the unified skew-normal posterior** which relies on the novel results in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). This scheme is described in detail in Section 2.4 of the paper. A pseudo-code is also provided in `Algorithm 1`. 
+This subsection implements the **i.i.d. sampler from the unified skew-normal posterior** which relies on the novel results in [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565). This scheme is described in detail in Section 2.4 of the paper. A pseudo-code is also provided in `Algorithm 1`. 
 
 To implement this routine, **let us re-start a new** `R` **session** and **set the working directory where** `voice_data.RData` **is placed**. Once this has been done, load the file `voice_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`) together with the desired number `N_sampl` of i.i.d. samples.
 
@@ -71,7 +71,7 @@ p <- dim(X)[2]
 # Number of i.i.d. samples from the posterior
 N_sampl <- 20000
 ```
-Once the above steps have been done, let us first **define the key quantities to implement** `Algorithm 1` in [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565).
+Once the above steps have been done, let us first **define the key quantities to implement** `Algorithm 1` in [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565).
 
 ``` r
 # Relevant parameters of the Gaussian prior
@@ -351,7 +351,7 @@ save(time_MH,beta_MH,MH_means,pred_MH,file="MH_output.RData")
 ```
 Implementation of Exact Inference
 ================
-As discussed in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md), besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** *26* **held-out units**.
+As discussed in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md), besides comparing the above algorithms in terms of **computational efficiency**, there is also an interest in understanding **to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions** presented in Section 2.3 of [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565). Here the focus is on the **posterior mean of the regression coefficients** and the **posterior predictive probabilities for the** *26* **held-out units**.
 
 To address the above goal, let us **re-start again a new** `R` **session** and **set the working directory where** `voice_data.RData` **is placed**. Once this has been done, load the file `voice_data.RData` along with useful `R` packages, and set the model dimensions (`p`,`n`).
 
@@ -427,7 +427,7 @@ save(NUMERICAL_means,pred_NUMERICAL,file="NUMERICAL_output.RData")
 ```
 Performance Assessments
 ================
-This section concludes the analysis by providing **codes to obtain the same tables and figures** discussed in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). More specifically, **Table 1** compares the computational performance of the sampling schemes implemented above, whereas **Figures 2 and 3** assess to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions presented in Section 2.3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565)—with a focus on posterior means and posterior predictive probabilities.
+This section concludes the analysis by providing **codes to obtain the same tables and figures** discussed in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md). More specifically, **Table 1** compares the computational performance of the sampling schemes implemented above, whereas **Figures 2 and 3** assess to what extent the Monte Carlo estimates produced by the aforementioned sampling schemes can recover those provided by the exact expressions presented in Section 2.3 of [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565)—with a focus on posterior means and posterior predictive probabilities.
 
 Before providing the codes to produce Table 1 along with Figures 2 and 3, **re-start again a new** `R` **session** and **set the working directory where** `voice_data.RData`, `SUN_output.RData`, `GIBBS_output.RData`, `HMC_output.RData`, `MH_output.RData` and `NUMERICAL_output.RData` **are placed**. Once this has been done, load these data files along with useful `R` packages.
 
@@ -589,4 +589,4 @@ ggplot(data_final_plot, aes(x=method, y=value))+geom_boxplot(color="#838383",fil
 ```
 ![](https://raw.githubusercontent.com/danieledurante/probitSUN/master/img/F_predict_voice.png)
 
-Also in this case, **Figure 2** and **Figure 3** confirm the results in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md) and the discussions in Section 3 of [Durante (2018). *Conjugate Bayes for probit regression via unified skew-normals*](https://arxiv.org/abs/1802.09565).
+Also in this case, **Figure 2** and **Figure 3** confirm the results in [`genes_tutorial.md`](https://github.com/danieledurante/ProbitSUN/blob/master/genes_tutorial.md) and the discussions in Section 3 of [Durante (2019). *Conjugate Bayes for probit regression via unified skew-normal distributions*](https://arxiv.org/abs/1802.09565).
